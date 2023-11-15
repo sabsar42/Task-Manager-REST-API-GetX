@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:task_manager_project_rest_api/ui/screens/forgot_password_screen.dart';
 import 'package:task_manager_project_rest_api/ui/screens/login_screen.dart';
+import 'package:task_manager_project_rest_api/ui/screens/main_bottom_nav_screen.dart';
 import 'package:task_manager_project_rest_api/ui/screens/sign_up_screen.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/body_background.dart';
 
@@ -34,7 +35,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(
                   height: 16,
                 ),
-
                 TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
@@ -56,7 +56,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const MainBottomNavScreen()));
+                    },
                     child: const Icon(Icons.arrow_forward_ios_outlined),
                   ),
                 ),
@@ -65,10 +71,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Center(
                   child: TextButton(
-                    onPressed: () { Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ForgotPasswordScreen()));},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ForgotPasswordScreen()));
+                    },
                     child: Text(
                       'Forgot Password',
                       style: TextStyle(
