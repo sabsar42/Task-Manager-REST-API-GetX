@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:task_manager_project_rest_api/ui/screens/Cancelled_tasks_screen.dart';
+import 'package:task_manager_project_rest_api/ui/screens/cancelled_tasks_screen.dart';
 import 'package:task_manager_project_rest_api/ui/screens/completed_tasks_screen.dart';
 import 'package:task_manager_project_rest_api/ui/screens/new_tasks_screen.dart';
 import 'package:task_manager_project_rest_api/ui/screens/progress_tasks_screen.dart';
@@ -12,35 +12,39 @@ class MainBottomNavScreen extends StatefulWidget {
 }
 
 class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
+  int _selectedIndex = 0;
 
-  int _selectedIndex = 0 ;
-  List<Widget> _screens = [
+  final List<Widget> _screens = const [
     NewTasksScreen(),
     ProgressTasksScreen(),
     CompletedTasksScreen(),
     CancelledTasksScreen(),
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex ,
-          onTap: (index){
-            _selectedIndex = index;
-            setState(() {
 
-            });
+          currentIndex: _selectedIndex,
+          onTap: (index) {
+            _selectedIndex = index;
+            setState(() {});
           },
           selectedItemColor: Colors.green,
           unselectedItemColor: Colors.grey,
           showUnselectedLabels: true,
-          items: [
-        BottomNavigationBarItem(icon: Icon(Icons.note), label: 'New'),
-        BottomNavigationBarItem(icon: Icon(Icons.picture_as_pdf), label: 'In-progress'),
-        BottomNavigationBarItem(icon: Icon(Icons.account_circle_rounded), label: 'Completed'),
-        BottomNavigationBarItem(icon: Icon(Icons.contact_page_outlined), label: 'Cancelled'),
-      ]),
+          items: const [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.note_alt_outlined), label: 'New'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.restart_alt_rounded), label: 'In-progress'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.download_done_rounded), label: 'Completed'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.cancel_rounded), label: 'Cancelled'),
+          ]),
     );
   }
 }

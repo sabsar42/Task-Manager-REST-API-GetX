@@ -3,19 +3,20 @@ import 'package:flutter/material.dart';
 import '../widgets/profile_summary_card.dart';
 import '../widgets/task_item_card.dart';
 
-class ProgressTasksScreen extends StatefulWidget {
-  const ProgressTasksScreen({super.key});
+class CancelledTasksScreen extends StatefulWidget {
+  const CancelledTasksScreen({super.key});
 
   @override
-  State<ProgressTasksScreen> createState() => _ProgressTasksScreenState();
+  State<CancelledTasksScreen> createState() => _CancelledTasksScreenState();
 }
 
-class _ProgressTasksScreenState extends State<ProgressTasksScreen> {
+class _CancelledTasksScreenState extends State<CancelledTasksScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(//44min
+        child: Column(
+          //44min
           children: [
             const ProfileSummaryCard(),
             Expanded(
