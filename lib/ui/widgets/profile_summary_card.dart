@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
+import 'package:task_manager_project_rest_api/ui/controllers/auth_controllers.dart';
 import 'package:task_manager_project_rest_api/ui/screens/edit_profile_screen.dart';
+import 'package:task_manager_project_rest_api/ui/screens/login_screen.dart';
 
-class ProfileSummaryCard extends StatelessWidget {
+class ProfileSummaryCard extends StatefulWidget {
+  final bool enableOnTap;
+
   const ProfileSummaryCard({
     super.key,
     this.enableOnTap = true,
   });
 
-  final bool enableOnTap;
+  @override
+  State<ProfileSummaryCard> createState() => _ProfileSummaryCardState();
+}
 
+class _ProfileSummaryCardState extends State<ProfileSummaryCard> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        if (enableOnTap == true) {
+        if (widget.enableOnTap == true) {
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -27,20 +34,34 @@ class ProfileSummaryCard extends StatelessWidget {
         child: Icon(Icons.person),
       ),
       title: Text(
-        'Shakib Absar',
+        fullName,
         style: TextStyle(
           color: Colors.white,
         ),
       ),
       subtitle: Text(
-        'sabsar42@gmail.com',
+        AuthController.user?.email ?? ' ',
         style: TextStyle(
           color: Colors.white,
         ),
       ),
-      trailing:
-          enableOnTap ? const Icon(Icons.arrow_forward_ios_outlined) : null,
+      trailing: IconButton(
+        onPressed: () async {
+          await AuthController.clearAuthData();
+          if (mounted) {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => LoginScreen()),
+                (route) => false);
+          }
+        },
+        icon: Icon(Icons.logout),
+      ),
       tileColor: Colors.green,
     );
   }
+}
+
+String get fullName {
+  return '${AuthController.user?.firstName ?? ' '} ${AuthController.user?.lastName ?? ' '}';
 }

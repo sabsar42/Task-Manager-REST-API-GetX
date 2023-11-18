@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:task_manager_project_rest_api/ui/screens/login_screen.dart';
@@ -56,8 +57,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       decoration: const InputDecoration(
                         hintText: 'Email',
                       ),
+                      autovalidateMode: AutovalidateMode.always,
                       validator: (String? value) {
                         // todo - validate the email address with regex
+
                         if (value?.trim().isEmpty ?? true) {
                           return 'Enter your valid email';
                         }
@@ -142,7 +145,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         child: ElevatedButton(
                           onPressed: _signUp,
-                          child: const Icon(Icons.arrow_circle_right_outlined),
+                          child: const Icon(Icons.arrow_forward_ios),
                         ),
                       ),
                     ),
@@ -230,3 +233,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.dispose();
   }
 }
+
+// FOR RegEx
+
+// bool validateEmail(String value) {
+//   Pattern pattern =
+//       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+//   RegExp regex = new RegExp(pattern);
+//   return (!regex.hasMatch(value)) ? false : true;
+// }
