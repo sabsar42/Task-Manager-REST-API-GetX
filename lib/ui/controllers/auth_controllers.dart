@@ -3,6 +3,9 @@ import 'dart:ui';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/models/user_model.dart';
+import 'dart:convert';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController {
   static String? token;
@@ -19,14 +22,12 @@ class AuthController {
   static Future<void> initializeUserCache() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     token = sharedPreferences.getString('token');
-    user = UserModel.fromJson(
-        jsonDecode(sharedPreferences.getString('user') ?? '{}'));
+    user = UserModel.fromJson(jsonDecode(sharedPreferences.getString('user') ?? '{}'));
   }
 
   static Future<bool> checkAuthState() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    token = sharedPreferences.getString('token');
-    if (token != null) {
+    if (sharedPreferences.containsKey('token')) {
       await initializeUserCache();
       return true;
     }
@@ -37,6 +38,5 @@ class AuthController {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.clear();
     token = null;
-
   }
 }

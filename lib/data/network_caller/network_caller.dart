@@ -1,8 +1,15 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
+import 'package:task_manager_project_rest_api/ui/controllers/auth_controllers.dart';
 
+import 'network_response.dart';
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:http/http.dart';
 
 import 'network_response.dart';
 
@@ -13,9 +20,9 @@ class NetworkCaller {
       log(url);
       log(body.toString());
       final Response response =
-      await post(Uri.parse(url), body: jsonEncode(body), headers: {
+          await post(Uri.parse(url), body: jsonEncode(body), headers: {
         'Content-type': 'Application/json',
-
+        'token': AuthController.token.toString(),
       });
       log(response.headers.toString());
       log(response.statusCode.toString());
