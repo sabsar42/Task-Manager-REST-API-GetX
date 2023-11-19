@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter/material.dart';
 import 'package:task_manager_project_rest_api/data/models/user_model.dart';
 import 'package:task_manager_project_rest_api/ui/controllers/auth_controllers.dart';
 import 'package:task_manager_project_rest_api/ui/screens/forgot_password_screen.dart';
-import 'package:task_manager_project_rest_api/ui/screens/login_screen.dart';
 import 'package:task_manager_project_rest_api/ui/screens/main_bottom_nav_screen.dart';
 import 'package:task_manager_project_rest_api/ui/screens/sign_up_screen.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/body_background.dart';
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../data/network_caller/network_caller.dart';
 import '../../data/network_caller/network_response.dart';
 import '../../data/utility/urls.dart';

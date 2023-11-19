@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter/material.dart';
-import 'package:task_manager_project_rest_api/ui/screens/login_screen.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/body_background.dart';
-import 'package:flutter/material.dart';
 
 import '../../data/network_caller/network_caller.dart';
 import '../../data/network_caller/network_response.dart';

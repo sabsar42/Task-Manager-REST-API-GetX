@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter/material.dart';
 import 'package:task_manager_project_rest_api/ui/screens/login_screen.dart';
 import 'package:task_manager_project_rest_api/ui/screens/reset_password_screen.dart';
-import 'package:task_manager_project_rest_api/ui/screens/sign_up_screen.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/body_background.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 

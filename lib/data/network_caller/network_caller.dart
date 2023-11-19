@@ -1,17 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:task_manager_project_rest_api/ui/controllers/auth_controllers.dart';
 
 import 'network_response.dart';
-import 'dart:convert';
-import 'dart:developer';
 
-import 'package:http/http.dart';
 
-import 'network_response.dart';
 
 class NetworkCaller {
   Future<NetworkResponse> postRequest(String url,

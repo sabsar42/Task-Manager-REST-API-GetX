@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter/material.dart';
 import 'package:task_manager_project_rest_api/ui/screens/login_screen.dart';
 import 'package:task_manager_project_rest_api/ui/screens/pin_verfication_screen.dart';
-import 'package:task_manager_project_rest_api/ui/screens/sign_up_screen.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/body_background.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
@@ -34,7 +31,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 const SizedBox(
                   height: 8,
                 ),
-                Text(
+                const Text(
                   'Minimum Password length Should be more than 8 letters ',
                   style: TextStyle(
                       fontWeight: FontWeight.w600, color: Colors.grey),
@@ -43,7 +40,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   height: 16,
                 ),
                 TextFormField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Password',
                   ),
                 ),
@@ -51,7 +48,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   height: 16,
                 ),
                 TextFormField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Confirm Password',
                   ),
                 ),
@@ -69,7 +66,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                 const PinVerificationScreen()),
                       );
                     },
-                    child:Text('Confirm')
+                    child:const Text('Confirm')
                   ),
                 ),
                 const SizedBox(
@@ -78,7 +75,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       "Have an account ?",
                       style: TextStyle(
                         fontSize: 16,

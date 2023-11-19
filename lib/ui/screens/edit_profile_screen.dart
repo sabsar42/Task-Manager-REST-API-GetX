@@ -16,14 +16,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       body: SafeArea(
           child: Column(
         children: [
-          ProfileSummaryCard(
+          const ProfileSummaryCard(
             enableOnTap: false,
           ),
           Expanded(
               child: BodyBackground(
             child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -37,42 +37,42 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     const SizedBox(
                       height: 16,
                     ),
-                    PhotoPickerField(),
+                    const PhotoPickerField(),
                     const SizedBox(
                       height: 16,
                     ),
                     TextFormField(
-                      decoration: InputDecoration(hintText: 'Photos'),
+                      decoration: const InputDecoration(hintText: 'Photos'),
                     ),
                     const SizedBox(
                       height: 8,
                     ),
                     TextFormField(
-                      decoration: InputDecoration(hintText: 'Email'),
+                      decoration: const InputDecoration(hintText: 'Email'),
                     ),
                     const SizedBox(
                       height: 8,
                     ),
                     TextFormField(
-                      decoration: InputDecoration(hintText: 'First Name'),
+                      decoration: const InputDecoration(hintText: 'First Name'),
                     ),
                     const SizedBox(
                       height: 8,
                     ),
                     TextFormField(
-                      decoration: InputDecoration(hintText: 'Last name'),
+                      decoration: const InputDecoration(hintText: 'Last name'),
                     ),
                     const SizedBox(
                       height: 8,
                     ),
                     TextFormField(
-                      decoration: InputDecoration(hintText: 'Mobile'),
+                      decoration: const InputDecoration(hintText: 'Mobile'),
                     ),
                     const SizedBox(
                       height: 8,
                     ),
                     TextFormField(
-                      decoration: InputDecoration(hintText: 'Password'),
+                      decoration: const InputDecoration(hintText: 'Password'),
                     ),
                     const SizedBox(
                       height: 16,
@@ -112,7 +112,7 @@ class PhotoPickerField extends StatelessWidget {
               flex: 1,
               child: Container(
                 height: 50,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.grey,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(8),
@@ -120,7 +120,7 @@ class PhotoPickerField extends StatelessWidget {
                   ),
                 ),
                 alignment: Alignment.center,
-                child: Text(
+                child: const Text(
                   'Photo',
                   style: TextStyle(
                     color: Colors.white,
@@ -130,8 +130,8 @@ class PhotoPickerField extends StatelessWidget {
           Expanded(
               flex: 3,
               child: Container(
-                padding: EdgeInsets.only(left: 16),
-                child: Text('Empty'),
+                padding: const EdgeInsets.only(left: 16),
+                child: const Text('Empty'),
               )),
         ],
       ),

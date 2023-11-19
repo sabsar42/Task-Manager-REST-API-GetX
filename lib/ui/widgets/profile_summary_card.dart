@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:task_manager_project_rest_api/ui/controllers/auth_controllers.dart';
 import 'package:task_manager_project_rest_api/ui/screens/edit_profile_screen.dart';
 import 'package:task_manager_project_rest_api/ui/screens/login_screen.dart';
@@ -25,23 +24,23 @@ class _ProfileSummaryCardState extends State<ProfileSummaryCard> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => EditProfileScreen(),
+              builder: (context) => const EditProfileScreen(),
             ),
           );
         }
       },
-      leading: CircleAvatar(
+      leading: const CircleAvatar(
         child: Icon(Icons.person),
       ),
       title: Text(
         fullName,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.white,
         ),
       ),
       subtitle: Text(
         AuthController.user?.email ?? ' ',
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.white,
         ),
       ),
@@ -51,11 +50,11 @@ class _ProfileSummaryCardState extends State<ProfileSummaryCard> {
           if (mounted) {
             Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => LoginScreen()),
+                MaterialPageRoute(builder: (context) => const LoginScreen()),
                 (route) => false);
           }
         },
-        icon: Icon(Icons.logout),
+        icon: const Icon(Icons.logout),
       ),
       tileColor: Colors.green,
     );

@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter/material.dart';
-import 'package:task_manager_project_rest_api/ui/screens/login_screen.dart';
 import 'package:task_manager_project_rest_api/ui/screens/pin_verfication_screen.dart';
-import 'package:task_manager_project_rest_api/ui/screens/sign_up_screen.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/body_background.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -34,7 +30,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     const SizedBox(
                       height: 8,
                     ),
-                    Text('A 6 digit PIN will be sent to your Email',style:
+                    const Text('A 6 digit PIN will be sent to your Email',style:
                       TextStyle(
                         fontWeight: FontWeight.w600,
                         color: Colors.grey
@@ -45,7 +41,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     ),
                     TextFormField(
                       keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Email',
                       ),
                     ),
@@ -72,7 +68,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           "Have an account ?",
                           style: TextStyle(
                             fontSize: 16,
