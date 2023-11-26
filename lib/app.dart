@@ -4,6 +4,8 @@ import 'package:task_manager_project_rest_api/ui/screens/splash_screen.dart';
 class TaskManagerApp extends StatelessWidget {
   const TaskManagerApp({super.key});
 
+  static GlobalKey<NavigatorState> navigationKey = GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,19 +26,12 @@ class TaskManagerApp extends StatelessWidget {
               fontSize: 32,
               fontWeight: FontWeight.w600,
             )),
-
-          primaryColor: Colors.green,
-          primarySwatch: Colors.green,
-          elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ElevatedButton.styleFrom(
+            primaryColor: Colors.green,
+            primarySwatch: Colors.green,
+            elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 12),
               // maximumSize: const Size.fromWidth(double.infinity)
-            )
-          )
-
-
-
-
-        ));
+            ))));
   }
 }

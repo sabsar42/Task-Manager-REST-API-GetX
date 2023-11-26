@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../../data/models/task..dart';
+
 class TaskItemCard extends StatelessWidget {
   const TaskItemCard({
     super.key,
+    required this.task,
   });
+
+  final Task task;
 
   @override
   Widget build(BuildContext context) {
@@ -14,25 +19,39 @@ class TaskItemCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Title Will be here ',style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-            ),),
-            const Text('Description '),
-            const Text('Date: 12-20-23 '),
-
+            Text(
+              task.title ?? ' ',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Text(
+              task.description ?? ' ',
+            ),
+            Text('Date:  ${task.createdDate} '),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Chip(label: Text('New ',style: TextStyle(
-                  color: Colors.white,
-                ),),
+                 Chip(
+                  label: Text(
+                   task.status ?? 'New',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
                   backgroundColor: Colors.lightBlue,
                 ),
                 Wrap(
                   children: [
-                    IconButton(onPressed: (){}, icon: const Icon(Icons.edit),),
-                    IconButton(onPressed: (){}, icon: const Icon(Icons.delete),)
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.edit),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.delete),
+                    )
                   ],
                 )
               ],
