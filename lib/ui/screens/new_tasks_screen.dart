@@ -117,7 +117,6 @@ class _NewTasksScreenState extends State<NewTasksScreen> {
                   }),
             ))
           ],
-
         ),
       ),
     );
