@@ -59,6 +59,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         if (value?.trim().isEmpty ?? true) {
                           return 'Enter your valid email';
                         }
+                        bool emailValid = RegExp(
+                                r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
+                            .hasMatch(value!);
+                        if (emailValid == false) {
+                          return 'Enter valid Email';
+                        }
                         return null;
                       },
                     ),
@@ -105,6 +111,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         // todo - validate the mobile no with 11 digits
                         if (value?.trim().isEmpty ?? true) {
                           return 'Enter your mobile';
+                        }
+                        bool validPhone =
+                            RegExp(r'^01[3-9][0-9]{8}$').hasMatch(value!);
+
+                        if (validPhone == false) {
+                          return 'Enter valid Phone Number';
                         }
                         return null;
                       },

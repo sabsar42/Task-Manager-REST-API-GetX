@@ -15,7 +15,7 @@ class _ProgressTasksScreenState extends State<ProgressTasksScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(//44min
+        child: Column(
           children: [
             const ProfileSummaryCard(),
             Expanded(
