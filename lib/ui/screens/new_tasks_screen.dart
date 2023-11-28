@@ -113,6 +113,17 @@ class _NewTasksScreenState extends State<NewTasksScreen> {
                   itemBuilder: (context, index) {
                     return TaskItemCard(
                       task: taskListModel.taskList![index],
+                      onStatusChange: (){
+                        getNewTaskList();
+                      },
+                      showProgress: (inProgress){
+                        getNewTaskInProgress = inProgress;
+                        if(mounted){
+                          setState(() {
+
+                          });
+                        }
+                      },
                     );
                   }),
             ))

@@ -1,14 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager_project_rest_api/data/network_caller/network_caller.dart';
 
 import '../../data/models/task..dart';
+import '../../data/utility/urls.dart';
 
-class TaskItemCard extends StatelessWidget {
+enum TaskStatus {
+  New,
+  Progress,
+  Completed,
+  Cancelled,
+}
+
+class TaskItemCard extends StatefulWidget {
   const TaskItemCard({
     super.key,
-    required this.task,
+    required this.task, required this.onStatusChange, required this.showProgress,
   });
 
   final Task task;
+  final VoidCallback onStatusChange;
+  final Function(bool) showProgress;
+  @override
+  State<TaskItemCard> createState() => _TaskItemCardState();
+}
+
+class _TaskItemCardState extends State<TaskItemCard> {
+  Future<void> updateTaskStatus(String status) async {
+    widget.showProgress(true);
+    final response = await NetworkCaller().getRequest(Urls.updateTaskStatus(widget.task.sId ?? ' ', status));
+   if(response.isSuccess){
+     widget.onStatusChange();
+   }
+   widget.showProgress(false);
+  }
+  // Future<void> deleteTaskStatus(String status) async {
+  //   widget.showProgress(true);
+  //   final response = await NetworkCaller().getRequest(Urls.updateTaskStatus(widget.task.sId ?? ' ', status));
+  //   if(response.isSuccess){
+  //     widget.onStatusChange();
+  //   }
+  //   widget.showProgress(false);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -20,22 +52,22 @@ class TaskItemCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              task.title ?? ' ',
+              widget.task.title ?? ' ',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
               ),
             ),
             Text(
-              task.description ?? ' ',
+              widget.task.description ?? ' ',
             ),
-            Text('Date:  ${task.createdDate} '),
+            Text('Date:  ${widget.task.createdDate} '),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                 Chip(
+                Chip(
                   label: Text(
-                   task.status ?? 'New',
+                    widget.task.status ?? 'New',
                     style: TextStyle(
                       color: Colors.white,
                     ),
@@ -45,13 +77,15 @@ class TaskItemCard extends StatelessWidget {
                 Wrap(
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        showUpadteStatusModal();
+                      },
                       icon: const Icon(Icons.edit),
                     ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.delete),
-                    )
+                    // IconButton(
+                    //   onPressed: () {},
+                    //   icon: const Icon(Icons.delete),
+                    // )
                   ],
                 )
               ],
@@ -60,5 +94,41 @@ class TaskItemCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void showUpadteStatusModal() {
+
+    List<ListTile> items = TaskStatus.values.map((e) =>
+        ListTile(title: Text('${e.name}'),
+        onTap: (){
+          updateTaskStatus(e.name);
+          Navigator.pop(context);
+        },)).toList();
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Update Status'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: items,
+            ),
+            actions: [
+              ButtonBar(
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Cancel',
+                        style: TextStyle(
+                          color: Colors.blueGrey,
+                        )),
+                  ),
+                ],
+              )
+            ],
+          );
+        });
   }
 }
