@@ -42,6 +42,7 @@ class _ProgressTasksScreenState extends State<ProgressTasksScreen> {
     getProgressTaskList();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
