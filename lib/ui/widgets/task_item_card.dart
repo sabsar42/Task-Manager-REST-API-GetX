@@ -3,6 +3,7 @@ import 'package:task_manager_project_rest_api/data/network_caller/network_caller
 
 import '../../data/models/task..dart';
 import '../../data/utility/urls.dart';
+import '../screens/main_bottom_nav_screen.dart';
 
 enum TaskStatus {
   New,
@@ -14,12 +15,15 @@ enum TaskStatus {
 class TaskItemCard extends StatefulWidget {
   const TaskItemCard({
     super.key,
-    required this.task, required this.onStatusChange, required this.showProgress,
+    required this.task,
+    required this.onStatusChange,
+    required this.showProgress,
   });
 
   final Task task;
   final VoidCallback onStatusChange;
   final Function(bool) showProgress;
+
   @override
   State<TaskItemCard> createState() => _TaskItemCardState();
 }
@@ -27,12 +31,14 @@ class TaskItemCard extends StatefulWidget {
 class _TaskItemCardState extends State<TaskItemCard> {
   Future<void> updateTaskStatus(String status) async {
     widget.showProgress(true);
-    final response = await NetworkCaller().getRequest(Urls.updateTaskStatus(widget.task.sId ?? ' ', status));
-   if(response.isSuccess){
-     widget.onStatusChange();
-   }
-   widget.showProgress(false);
+    final response = await NetworkCaller()
+        .getRequest(Urls.updateTaskStatus(widget.task.sId ?? ' ', status));
+    if (response.isSuccess) {
+      widget.onStatusChange();
+    }
+    widget.showProgress(false);
   }
+
   // Future<void> deleteTaskStatus(String status) async {
   //   widget.showProgress(true);
   //   final response = await NetworkCaller().getRequest(Urls.updateTaskStatus(widget.task.sId ?? ' ', status));
@@ -97,13 +103,19 @@ class _TaskItemCardState extends State<TaskItemCard> {
   }
 
   void showUpadteStatusModal() {
-
-    List<ListTile> items = TaskStatus.values.map((e) =>
-        ListTile(title: Text('${e.name}'),
-        onTap: (){
-          updateTaskStatus(e.name);
-          Navigator.pop(context);
-        },)).toList();
+    List<ListTile> items = TaskStatus.values
+        .map((e) => ListTile(
+              title: Text('${e.name}'),
+              onTap: () {
+                updateTaskStatus(e.name);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MainBottomNavScreen()),
+                    (route) => false);
+              },
+            ))
+        .toList();
     showDialog(
         context: context,
         builder: (context) {

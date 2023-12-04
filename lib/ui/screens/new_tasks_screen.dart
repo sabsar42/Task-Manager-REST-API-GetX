@@ -9,6 +9,7 @@ import '../../data/utility/urls.dart';
 import '../widgets/profile_summary_card.dart';
 import '../widgets/summary_card.dart';
 import '../widgets/task_item_card.dart';
+import 'package:flutter/material.dart';
 
 class NewTasksScreen extends StatefulWidget {
   const NewTasksScreen({super.key});
@@ -20,10 +21,9 @@ class NewTasksScreen extends StatefulWidget {
 class _NewTasksScreenState extends State<NewTasksScreen> {
   bool getNewTaskInProgress = false;
   bool getTaskCountSummaryInProgress = false;
+  TaskListModel taskListModel = TaskListModel();
   TaskCountSummaryListModel taskCountSummaryListModel =
       TaskCountSummaryListModel();
-
-  TaskListModel taskListModel = TaskListModel();
 
   Future<void> getTaskCountSummaryList() async {
     getTaskCountSummaryInProgress = true;
@@ -61,26 +61,33 @@ class _NewTasksScreenState extends State<NewTasksScreen> {
   @override
   void initState() {
     super.initState();
-    getNewTaskList();
     getTaskCountSummaryList();
+    getNewTaskList();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const AddNewTaskScreen()));
+        onPressed: () async {
+          final response = await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AddNewTaskScreen(),
+            ),
+          );
+
+          if (response != null && response == true) {
+            getNewTaskList();
+            getTaskCountSummaryList();
+          }
         },
         child: const Icon(Icons.add),
       ),
       body: SafeArea(
         child: Column(
           children: [
-            const ProfileSummaryCard(),
+             ProfileSummaryCard(),
             Visibility(
               visible: getTaskCountSummaryInProgress == false &&
                   (taskCountSummaryListModel.taskCountList?.isNotEmpty ??
@@ -105,28 +112,34 @@ class _NewTasksScreenState extends State<NewTasksScreen> {
               ),
             ),
             Expanded(
-                child: Visibility(
-              visible: getNewTaskInProgress == false,
-              replacement: const Center(child: CircularProgressIndicator()),
-              child: ListView.builder(
-                  itemCount: taskListModel.taskList?.length ?? 0,
-                  itemBuilder: (context, index) {
-                    return TaskItemCard(
-                      task: taskListModel.taskList![index],
-                      onStatusChange: (){
-                        getNewTaskList();
-                      },
-                      showProgress: (inProgress){
-                        getNewTaskInProgress = inProgress;
-                        if(mounted){
-                          setState(() {
-
-                          });
-                        }
-                      },
-                    );
-                  }),
-            ))
+              child: Visibility(
+                visible: getNewTaskInProgress == false,
+                replacement: const Center(child: CircularProgressIndicator()),
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    getNewTaskList();
+                    getTaskCountSummaryList();
+                  },
+                  child: ListView.builder(
+                    itemCount: taskListModel.taskList?.length ?? 0,
+                    itemBuilder: (context, index) {
+                      return TaskItemCard(
+                        task: taskListModel.taskList![index],
+                        onStatusChange: () {
+                          getNewTaskList();
+                        },
+                        showProgress: (inProgress) {
+                          getNewTaskInProgress = inProgress;
+                          if (mounted) {
+                            setState(() {});
+                          }
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

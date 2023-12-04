@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/models/user_model.dart';
+import 'dart:convert';
+
 
 
 class AuthController {
@@ -13,6 +15,12 @@ class AuthController {
     await sharedPreferences.setString('token', t);
     await sharedPreferences.setString('user', jsonEncode(model.toJson()));
     token = t;
+    user = model;
+  }
+
+  static Future<void> updateUserInformation(UserModel model) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setString('user', jsonEncode(model.toJson()));
     user = model;
   }
 
