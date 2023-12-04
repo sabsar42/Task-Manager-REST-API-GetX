@@ -36,8 +36,9 @@ class _CancelledTasksScreenState extends State<CancelledTasksScreen> {
 
   @override
   void initState() {
-    super.initState();
     getCancelledTaskList();
+    super.initState();
+
   }
 
   @override

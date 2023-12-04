@@ -108,11 +108,12 @@ class _TaskItemCardState extends State<TaskItemCard> {
               title: Text('${e.name}'),
               onTap: () {
                 updateTaskStatus(e.name);
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => MainBottomNavScreen()),
-                    (route) => false);
+
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => MainBottomNavScreen()),
+                          (route) => false);
+
               },
             ))
         .toList();

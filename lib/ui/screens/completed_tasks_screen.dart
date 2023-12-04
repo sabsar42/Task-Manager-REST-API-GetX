@@ -53,8 +53,9 @@ class _CompletedTasksScreenState extends State<CompletedTasksScreen> {
 
   @override
   void initState() {
-    super.initState();
     getCompletedTaskList();
+    super.initState();
+
   }
 
   @override

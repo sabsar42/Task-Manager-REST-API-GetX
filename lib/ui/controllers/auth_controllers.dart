@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/models/user_model.dart';
@@ -43,5 +44,10 @@ class AuthController {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.clear();
     token = null;
+  }
+  static showBase64Image(base64Image){
+    UriData? data = Uri.parse(base64Image).data;
+    Uint8List myImage = data!.contentAsBytes();
+    return myImage;
   }
 }
