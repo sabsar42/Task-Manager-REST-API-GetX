@@ -35,21 +35,6 @@ class _CompletedTasksScreenState extends State<CompletedTasksScreen> {
     }
   }
 
-  // Future<void> getUpdateProfileSummaryCard() async {
-  //   getUpdateProfileSummaryCardInProgress = true;
-  //   if (mounted) {
-  //     setState(() {});
-  //   }
-  //   final NetworkResponse response =
-  //   await NetworkCaller().getRequest(Urls.getCompletedTasks);
-  //   if (response.isSuccess) {
-  //     taskListModel = TaskListModel.fromJson(response.jsonResponse);
-  //   }
-  //   getCompletedTaskInProgress = false;
-  //   if (mounted) {
-  //     setState(() {});
-  //   }
-  // }
 
   @override
   void initState() {
@@ -64,7 +49,7 @@ class _CompletedTasksScreenState extends State<CompletedTasksScreen> {
         body: SafeArea(
       child: Column(
         children: [
-          const ProfileSummaryCard(),
+           ProfileSummaryCard(),
           Expanded(
             child: Visibility(
               visible: getCompletedTaskInProgress == false,

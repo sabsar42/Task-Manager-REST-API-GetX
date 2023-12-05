@@ -59,7 +59,7 @@ class _TaskItemCardState extends State<TaskItemCard> {
           children: [
             Text(
               widget.task.title ?? ' ',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
               ),
@@ -74,7 +74,7 @@ class _TaskItemCardState extends State<TaskItemCard> {
                 Chip(
                   label: Text(
                     widget.task.status ?? 'New',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                     ),
                   ),
@@ -105,13 +105,13 @@ class _TaskItemCardState extends State<TaskItemCard> {
   void showUpadteStatusModal() {
     List<ListTile> items = TaskStatus.values
         .map((e) => ListTile(
-              title: Text('${e.name}'),
+              title: Text(e.name),
               onTap: () {
                 updateTaskStatus(e.name);
 
                   Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (context) => MainBottomNavScreen()),
+                      MaterialPageRoute(builder: (context) => const MainBottomNavScreen()),
                           (route) => false);
 
               },
@@ -121,7 +121,7 @@ class _TaskItemCardState extends State<TaskItemCard> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Update Status'),
+            title: const Text('Update Status'),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: items,
@@ -133,7 +133,7 @@ class _TaskItemCardState extends State<TaskItemCard> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text('Cancel',
+                    child: const Text('Cancel',
                         style: TextStyle(
                           color: Colors.blueGrey,
                         )),

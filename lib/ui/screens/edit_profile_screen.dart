@@ -6,7 +6,6 @@ import 'package:task_manager_project_rest_api/ui/widgets/body_background.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/profile_summary_card.dart';
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 
 import '../../data/models/user_model.dart';
 import '../../data/network_caller/network_caller.dart';
@@ -14,7 +13,6 @@ import '../../data/network_caller/network_response.dart';
 import '../../data/utility/urls.dart';
 import '../controllers/auth_controllers.dart';
 import '../widgets/snack_message.dart';
-import 'package:image_picker_platform_interface/image_picker_platform_interface.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -85,7 +83,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             ),
                             validator: (String? value) {
                               if (value?.trim().isEmpty ?? true) {
-                                return 'Eneter an email';
+                                return 'Enter an email';
                               }
 
                               bool emailValid = RegExp(
@@ -108,7 +106,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             ),
                             validator: (String? value) {
                               if (value?.trim().isEmpty ?? true) {
-                                return 'Eneter your First Name';
+                                return 'Enter your First Name';
                               }
                               return null;
                             },
@@ -123,7 +121,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             ),
                             validator: (String? value) {
                               if (value?.trim().isEmpty ?? true) {
-                                return 'Eneter your Last Name';
+                                return 'Enter your Last Name';
                               }
                               return null;
                             },
@@ -159,7 +157,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               hintText: 'Password (Optional)',
                             ),
                             validator: (String? value) {
-                              if (value!.length < 6 && value!.length > 0) {
+                              if (value!.length < 6 && value.isNotEmpty) {
                                 return 'Enter Password more than 6 letters';
                               }
                               return null;
@@ -173,7 +171,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             child: Visibility(
                               visible: _updateProfileInProgress == false,
                               replacement:
-                                  Center(child: CircularProgressIndicator()),
+                                  const Center(child: CircularProgressIndicator()),
                               child: ElevatedButton(
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
@@ -239,8 +237,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         showSnackMessage(context, 'Update profile success!');
 
         Navigator.pushAndRemoveUntil(
+
             context,
-            MaterialPageRoute(builder: (context) => MainBottomNavScreen()),
+            MaterialPageRoute(builder: (context) => const MainBottomNavScreen()),
             (route) => false);
       }
     } else {
@@ -277,9 +276,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           Expanded(
             flex: 3,
             child: InkWell(
+              highlightColor: Colors.blueGrey,
               onTap: () async {
                 final XFile? image = await ImagePicker()
-                    .pickImage(source: ImageSource.camera, imageQuality: 50);
+                    .pickImage(source: ImageSource.gallery, imageQuality: 50);
                 if (image != null) {
                   photo = image;
                   if (mounted) {
@@ -297,6 +297,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
             ),
           ),
+
+
         ],
       ),
     );

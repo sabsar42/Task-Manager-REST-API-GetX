@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager_project_rest_api/ui/screens/login_screen.dart';
-import 'package:task_manager_project_rest_api/ui/screens/pin_verfication_screen.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/body_background.dart';
 
 import '../../data/network_caller/network_caller.dart';
@@ -10,9 +9,9 @@ import '../widgets/snack_message.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   String? email;
-  String? OTP;
+  String? otp;
 
-  ResetPasswordScreen({super.key, required this.email, required this.OTP});
+  ResetPasswordScreen({super.key, required this.email, required this.otp});
 
   @override
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
@@ -21,7 +20,7 @@ class ResetPasswordScreen extends StatefulWidget {
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _passwordTEController = TextEditingController();
-  final TextEditingController _confrimPasswordTEController =
+  final TextEditingController _confirmPasswordTEController =
       TextEditingController();
 
   @override
@@ -74,7 +73,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     height: 16,
                   ),
                   TextFormField(
-                    controller: _confrimPasswordTEController,
+                    controller: _confirmPasswordTEController,
                     obscureText: true,
                     decoration: const InputDecoration(
                       hintText: 'Password',
@@ -151,10 +150,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       final NetworkResponse response =
           await NetworkCaller().postRequest(Urls.recoverResetPassword, body: {
         "email": widget.email,
-        "OTP": widget.OTP,
+        "OTP": widget.otp,
         "password": _passwordTEController.text,
       });
-
+      _clearTextFields();
       if (mounted) {
         setState(() {});
       }
@@ -162,7 +161,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         if (mounted) {
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => LoginScreen()),
+              MaterialPageRoute(builder: (context) => const LoginScreen()),
               (route) => false);
           showSnackMessage(context, 'Password Updated.');
         }
@@ -174,17 +173,13 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     }
   }
 
-// void _clearTextFields() {
-//   _emailTEController.clear();
-//   _otpTEController.clear();
-//   _passwordTEController.clear();
-// }
-//
-// @override
-// void dispose() {
-//   _emailTEController.dispose();
-//   _otpTEController.dispose();
-//   _passwordTEController.dispose();
-//   super.dispose();
-// }
+  void _clearTextFields() {
+    _passwordTEController.clear();
+  }
+
+  @override
+  void dispose() {
+    _passwordTEController.dispose();
+    super.dispose();
+  }
 }

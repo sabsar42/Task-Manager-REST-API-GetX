@@ -6,7 +6,6 @@ import '../../data/network_caller/network_response.dart';
 import '../../data/utility/urls.dart';
 import '../widgets/profile_summary_card.dart';
 import '../widgets/task_item_card.dart';
-import 'package:flutter/material.dart';
 
 
 class ProgressTasksScreen extends StatefulWidget {
@@ -50,7 +49,7 @@ class _ProgressTasksScreenState extends State<ProgressTasksScreen> {
         body: SafeArea(
           child: Column(
             children: [
-               const ProfileSummaryCard(),
+                ProfileSummaryCard(),
               Expanded(
                 child: Visibility(
                   visible: getProgressTaskInProgress == false,

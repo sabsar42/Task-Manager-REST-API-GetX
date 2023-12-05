@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:task_manager_project_rest_api/ui/screens/pin_verfication_screen.dart';
+import 'package:task_manager_project_rest_api/ui/screens/pin_verification_screen.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/body_background.dart';
-import 'package:flutter/material.dart';
 import 'package:task_manager_project_rest_api/data/network_caller/network_caller.dart';
 import 'package:task_manager_project_rest_api/data/network_caller/network_response.dart';
 import 'package:task_manager_project_rest_api/data/utility/urls.dart';
-import 'package:task_manager_project_rest_api/ui/widgets/body_background.dart';
-import 'package:task_manager_project_rest_api/ui/widgets/profile_summary_card.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/snack_message.dart';
 
-import 'main_bottom_nav_screen.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -19,10 +15,10 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
-  bool forgetPasswordInProgess = false;
+  bool forgetPasswordInProgress = false;
 
   final TextEditingController _emailTEController = TextEditingController();
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +62,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     ),
                     validator: (String? value) {
                       if (value?.trim().isEmpty ?? true) {
-                        return 'Eneter an email';
+                        return 'Enter an email';
                       }
 
                       bool emailValid = RegExp(
@@ -88,8 +84,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   SizedBox(
                     width: double.infinity,
                     child: Visibility(
-                      visible: forgetPasswordInProgess == false,
-                      replacement: Center(child: CircularProgressIndicator()),
+                      visible: forgetPasswordInProgress == false,
+                      replacement: const Center(child: CircularProgressIndicator()),
                       child: ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
@@ -142,31 +138,34 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   }
 
   Future<void> forgetPassword() async {
-    forgetPasswordInProgess = true;
-    if (mounted) {
-      setState(() {});
-    }
-    final NetworkResponse response = await NetworkCaller()
-        .getRequest(Urls.recoveryEmailUrl(_emailTEController.text.trim()));
-    forgetPasswordInProgess = false;
-    if (mounted) {
-      setState(() {});
-    }
-
-    if (response.isSuccess) {
+    if (_formKey.currentState!.validate()) {
+      forgetPasswordInProgress = true;
       if (mounted) {
-        showSnackMessage(context, 'OTP sent to email address');
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => PinVerificationScreen(
-              email: _emailTEController.text.trim(),
-            ),
-          ),
-        );
-      } else {
+        setState(() {});
+      }
+      final NetworkResponse response = await NetworkCaller()
+          .getRequest(Urls.recoveryEmailUrl(_emailTEController.text.trim()));
+      forgetPasswordInProgress = false;
+      if (mounted) {
+        setState(() {});
+      }
+
+      if (response.isSuccess) {
         if (mounted) {
-          showSnackMessage(context, 'OTP sent failed. Try again!', true);
+          showSnackMessage(context, 'OTP sent to email address');
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  PinVerificationScreen(
+                    email: _emailTEController.text.trim(),
+                  ),
+            ),
+          );
+        } else {
+          if (mounted) {
+            showSnackMessage(context, 'OTP sent failed. Try again!', true);
+          }
         }
       }
     }

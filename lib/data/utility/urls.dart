@@ -1,5 +1,3 @@
-import 'package:task_manager_project_rest_api/data/models/user_model.dart';
-
 import '../../ui/widgets/task_item_card.dart';
 
 class Urls {
@@ -23,11 +21,11 @@ class Urls {
 
   static const String updateProfile = '$_baseUrl/profileUpdate';
 
-  static String recoveryEmailUrl(String Email) =>
-      '$_baseUrl/RecoverVerifyEmail/$Email';
+  static String recoveryEmailUrl(String email) =>
+      '$_baseUrl/RecoverVerifyEmail/$email';
 
-  static String recoveryOTPUrl(String Email, String OTP) =>
-      '$_baseUrl/RecoverVerifyOTP/$Email/$OTP';
+  static String recoveryOTPUrl(String email, String otp) =>
+      '$_baseUrl/RecoverVerifyOTP/$email/$otp';
 
   static const String recoverResetPassword = '$_baseUrl/RecoverResetPass';
 }

@@ -9,7 +9,6 @@ import '../../data/utility/urls.dart';
 import '../widgets/profile_summary_card.dart';
 import '../widgets/summary_card.dart';
 import '../widgets/task_item_card.dart';
-import 'package:flutter/material.dart';
 
 class NewTasksScreen extends StatefulWidget {
   const NewTasksScreen({super.key});
@@ -90,7 +89,7 @@ class _NewTasksScreenState extends State<NewTasksScreen> {
       body: SafeArea(
         child: Column(
           children: [
-             ProfileSummaryCard(),
+              ProfileSummaryCard(),
 
             Visibility(
               visible: getTaskCountSummaryInProgress == false &&

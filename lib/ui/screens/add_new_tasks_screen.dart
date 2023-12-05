@@ -128,7 +128,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
           showSnackMessage(context, 'New task added!');
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => MainBottomNavScreen()),
+              MaterialPageRoute(builder: (context) => const MainBottomNavScreen()),
                   (route) => false);
         }
       } else {
