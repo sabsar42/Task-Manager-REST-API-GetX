@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:task_manager_project_rest_api/ui/screens/login_screen.dart';
 import 'package:task_manager_project_rest_api/ui/screens/reset_password_screen.dart';
@@ -89,7 +88,8 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                       width: double.infinity,
                       child: Visibility(
                         visible: _otpVerifyInProgess == false,
-                        replacement: const Center(child: CircularProgressIndicator()),
+                        replacement:
+                            const Center(child: CircularProgressIndicator()),
                         child: ElevatedButton(
                           onPressed: () {
                             otpVerify();
@@ -155,9 +155,8 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) =>
-                    ResetPasswordScreen(
-                        email: widget.email, otp: _otpTEController.text)),
+                builder: (context) => ResetPasswordScreen(
+                    email: widget.email, otp: _otpTEController.text)),
           );
         } else {
           if (mounted) {

@@ -4,8 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/models/user_model.dart';
 
-
-
 class AuthController {
   static String? token;
   static UserModel? user;
@@ -27,7 +25,8 @@ class AuthController {
   static Future<void> initializeUserCache() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     token = sharedPreferences.getString('token');
-    user = UserModel.fromJson(jsonDecode(sharedPreferences.getString('user') ?? '{}'));
+    user = UserModel.fromJson(
+        jsonDecode(sharedPreferences.getString('user') ?? '{}'));
   }
 
   static Future<bool> checkAuthState() async {
@@ -44,16 +43,19 @@ class AuthController {
     await sharedPreferences.clear();
     token = null;
   }
-  static showBase64Image(base64Image){
+
+  static showBase64Image(base64Image) {
     UriData? data = Uri.parse(base64Image).data;
     Uint8List myImage = data!.contentAsBytes();
     return myImage;
   }
+
   static Future<void> recoverResetPass(UserModel model) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.setString('user', jsonEncode(model.toJson()));
     user = model;
   }
+
   static Future<void> recoverVerifyOTP(UserModel model) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.setString('user', jsonEncode(model.toJson()));

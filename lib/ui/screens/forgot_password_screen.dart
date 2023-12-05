@@ -6,7 +6,6 @@ import 'package:task_manager_project_rest_api/data/network_caller/network_respon
 import 'package:task_manager_project_rest_api/data/utility/urls.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/snack_message.dart';
 
-
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
 
@@ -85,7 +84,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     width: double.infinity,
                     child: Visibility(
                       visible: forgetPasswordInProgress == false,
-                      replacement: const Center(child: CircularProgressIndicator()),
+                      replacement:
+                          const Center(child: CircularProgressIndicator()),
                       child: ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
@@ -156,10 +156,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  PinVerificationScreen(
-                    email: _emailTEController.text.trim(),
-                  ),
+              builder: (context) => PinVerificationScreen(
+                email: _emailTEController.text.trim(),
+              ),
             ),
           );
         } else {

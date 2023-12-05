@@ -35,12 +35,10 @@ class _CompletedTasksScreenState extends State<CompletedTasksScreen> {
     }
   }
 
-
   @override
   void initState() {
     getCompletedTaskList();
     super.initState();
-
   }
 
   @override
@@ -49,7 +47,7 @@ class _CompletedTasksScreenState extends State<CompletedTasksScreen> {
         body: SafeArea(
       child: Column(
         children: [
-           ProfileSummaryCard(),
+          ProfileSummaryCard(),
           Expanded(
             child: Visibility(
               visible: getCompletedTaskInProgress == false,

@@ -6,7 +6,6 @@ import 'package:task_manager_project_rest_api/ui/widgets/body_background.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/profile_summary_card.dart';
 import 'dart:convert';
 
-
 import '../../data/models/user_model.dart';
 import '../../data/network_caller/network_caller.dart';
 import '../../data/network_caller/network_response.dart';
@@ -170,8 +169,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             width: double.infinity,
                             child: Visibility(
                               visible: _updateProfileInProgress == false,
-                              replacement:
-                                  const Center(child: CircularProgressIndicator()),
+                              replacement: const Center(
+                                  child: CircularProgressIndicator()),
                               child: ElevatedButton(
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
@@ -237,9 +236,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         showSnackMessage(context, 'Update profile success!');
 
         Navigator.pushAndRemoveUntil(
-
             context,
-            MaterialPageRoute(builder: (context) => const MainBottomNavScreen()),
+            MaterialPageRoute(
+                builder: (context) => const MainBottomNavScreen()),
             (route) => false);
       }
     } else {
@@ -296,8 +295,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
             ),
           ),
-
-
         ],
       ),
     );

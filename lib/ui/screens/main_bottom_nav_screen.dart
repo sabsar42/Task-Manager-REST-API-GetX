@@ -21,13 +21,11 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
     CancelledTasksScreen(),
   ];
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-
           currentIndex: _selectedIndex,
           onTap: (index) {
             _selectedIndex = index;

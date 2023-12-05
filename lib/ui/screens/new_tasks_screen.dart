@@ -62,10 +62,7 @@ class _NewTasksScreenState extends State<NewTasksScreen> {
     super.initState();
     getNewTaskList();
     getTaskCountSummaryList();
-
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +87,6 @@ class _NewTasksScreenState extends State<NewTasksScreen> {
         child: Column(
           children: [
             ProfileSummaryCard(),
-
             Visibility(
               visible: getTaskCountSummaryInProgress == false &&
                   (taskCountSummaryListModel.taskCountList?.isNotEmpty ??

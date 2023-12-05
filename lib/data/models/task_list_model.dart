@@ -1,4 +1,3 @@
-
 import 'package:task_manager_project_rest_api/data/models/task..dart';
 
 class TaskListModel {

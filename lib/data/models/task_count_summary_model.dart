@@ -25,4 +25,3 @@ class TaskCountSummaryListModel {
     return data;
   }
 }
-

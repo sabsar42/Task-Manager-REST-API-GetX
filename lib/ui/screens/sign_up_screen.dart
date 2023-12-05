@@ -54,7 +54,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       autovalidateMode: AutovalidateMode.always,
                       validator: (String? value) {
-
                         if (value?.trim().isEmpty ?? true) {
                           return 'Enter your valid email';
                         }
@@ -107,7 +106,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         hintText: 'Mobile',
                       ),
                       validator: (String? value) {
-
                         if (value?.trim().isEmpty ?? true) {
                           return 'Enter your mobile';
                         }

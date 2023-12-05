@@ -8,8 +8,6 @@ import 'package:task_manager_project_rest_api/ui/widgets/snack_message.dart';
 
 import 'main_bottom_nav_screen.dart';
 
-
-
 class AddNewTaskScreen extends StatefulWidget {
   const AddNewTaskScreen({super.key});
 
@@ -19,7 +17,8 @@ class AddNewTaskScreen extends StatefulWidget {
 
 class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   final TextEditingController _subjectTEController = TextEditingController();
-  final TextEditingController _descriptionTEController = TextEditingController();
+  final TextEditingController _descriptionTEController =
+      TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _createTaskInProgress = false;
 
@@ -47,14 +46,20 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SizedBox(height: 32,),
-                            Text('Add New Task', style: Theme.of(context).textTheme.titleLarge,),
-                            const SizedBox(height: 16,),
+                            const SizedBox(
+                              height: 32,
+                            ),
+                            Text(
+                              'Add New Task',
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                            const SizedBox(
+                              height: 16,
+                            ),
                             TextFormField(
                               controller: _subjectTEController,
-                              decoration: const InputDecoration(
-                                  hintText: 'Subject'
-                              ),
+                              decoration:
+                                  const InputDecoration(hintText: 'Subject'),
                               validator: (String? value) {
                                 if (value?.trim().isEmpty ?? true) {
                                   return 'Enter your subject';
@@ -62,13 +67,14 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                                 return null;
                               },
                             ),
-                            const SizedBox(height: 8,),
+                            const SizedBox(
+                              height: 8,
+                            ),
                             TextFormField(
                               controller: _descriptionTEController,
                               maxLines: 8,
                               decoration: const InputDecoration(
-                                  hintText: 'Description'
-                              ),
+                                  hintText: 'Description'),
                               validator: (String? value) {
                                 if (value?.trim().isEmpty ?? true) {
                                   return 'Enter your description';
@@ -76,7 +82,9 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                                 return null;
                               },
                             ),
-                            const SizedBox(height: 16,),
+                            const SizedBox(
+                              height: 16,
+                            ),
                             SizedBox(
                               width: double.infinity,
                               child: Visibility(
@@ -111,7 +119,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
         setState(() {});
       }
       final NetworkResponse response =
-      await NetworkCaller().postRequest(Urls.createNewTask, body: {
+          await NetworkCaller().postRequest(Urls.createNewTask, body: {
         "title": _subjectTEController.text.trim(),
         "description": _descriptionTEController.text.trim(),
         "status": "New"
@@ -128,8 +136,9 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
           showSnackMessage(context, 'New task added!');
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => const MainBottomNavScreen()),
-                  (route) => false);
+              MaterialPageRoute(
+                  builder: (context) => const MainBottomNavScreen()),
+              (route) => false);
         }
       } else {
         if (mounted) {
