@@ -89,7 +89,7 @@ class _NewTasksScreenState extends State<NewTasksScreen> {
       body: SafeArea(
         child: Column(
           children: [
-              ProfileSummaryCard(),
+            ProfileSummaryCard(),
 
             Visibility(
               visible: getTaskCountSummaryInProgress == false &&

@@ -6,9 +6,3 @@ void main() {
 }
 
 
-
-// Automatci refresh when new task is added, and when we put it in progress
-//regex
-//validation
-//inProgress, Completed, Cancelled Fetch these data
-// !

@@ -39,14 +39,15 @@ class _TaskItemCardState extends State<TaskItemCard> {
     widget.showProgress(false);
   }
 
-  // Future<void> deleteTaskStatus(String status) async {
-  //   widget.showProgress(true);
-  //   final response = await NetworkCaller().getRequest(Urls.updateTaskStatus(widget.task.sId ?? ' ', status));
-  //   if(response.isSuccess){
-  //     widget.onStatusChange();
-  //   }
-  //   widget.showProgress(false);
-  // }
+  Future<void> deleteTaskStatus(String id) async {
+    widget.showProgress(true);
+    final response = await NetworkCaller()
+        .getRequest(Urls.deleteTaskStatus(widget.task.sId ?? ' '));
+    if (response.isSuccess) {
+      widget.onStatusChange();
+    }
+    widget.showProgress(false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,10 +89,12 @@ class _TaskItemCardState extends State<TaskItemCard> {
                       },
                       icon: const Icon(Icons.edit),
                     ),
-                    // IconButton(
-                    //   onPressed: () {},
-                    //   icon: const Icon(Icons.delete),
-                    // )
+                    IconButton(
+                      onPressed: () {
+                        deleteTaskModal(widget.task.sId!);
+                      },
+                      icon: const Icon(Icons.delete),
+                    )
                   ],
                 )
               ],
@@ -109,11 +112,11 @@ class _TaskItemCardState extends State<TaskItemCard> {
               onTap: () {
                 updateTaskStatus(e.name);
 
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => const MainBottomNavScreen()),
-                          (route) => false);
-
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MainBottomNavScreen()),
+                    (route) => false);
               },
             ))
         .toList();
@@ -121,7 +124,10 @@ class _TaskItemCardState extends State<TaskItemCard> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text('Update Status'),
+            title: const Text(
+              'Update Status',
+              style: TextStyle(),
+            ),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: items,
@@ -135,6 +141,53 @@ class _TaskItemCardState extends State<TaskItemCard> {
                     },
                     child: const Text('Cancel',
                         style: TextStyle(
+                          color: Colors.blueGrey,
+                        )),
+                  ),
+                ],
+              )
+            ],
+          );
+        });
+  }
+
+  void deleteTaskModal(String id) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text(
+              'Confirm Delete',
+              style: TextStyle(
+                fontSize: 22,
+              ),
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+            ),
+            actions: [
+              ButtonBar(
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      deleteTaskStatus(id);
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                        'Yes',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.blueGrey,
+                        )),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                        'No',
+                        style: TextStyle(
+                          fontSize: 18,
                           color: Colors.blueGrey,
                         )),
                   ),
