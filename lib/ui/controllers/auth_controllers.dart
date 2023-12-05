@@ -50,4 +50,14 @@ class AuthController {
     Uint8List myImage = data!.contentAsBytes();
     return myImage;
   }
+  static Future<void> recoverResetPass(UserModel model) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setString('user', jsonEncode(model.toJson()));
+    user = model;
+  }
+  static Future<void> recoverVerifyOTP(UserModel model) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setString('user', jsonEncode(model.toJson()));
+    user = model;
+  }
 }

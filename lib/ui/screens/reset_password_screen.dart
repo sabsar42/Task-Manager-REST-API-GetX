@@ -3,14 +3,27 @@ import 'package:task_manager_project_rest_api/ui/screens/login_screen.dart';
 import 'package:task_manager_project_rest_api/ui/screens/pin_verfication_screen.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/body_background.dart';
 
+import '../../data/network_caller/network_caller.dart';
+import '../../data/network_caller/network_response.dart';
+import '../../data/utility/urls.dart';
+import '../widgets/snack_message.dart';
+
 class ResetPasswordScreen extends StatefulWidget {
-  const ResetPasswordScreen({super.key});
+  String? email;
+  String? OTP;
+
+  ResetPasswordScreen({super.key, required this.email, required this.OTP});
 
   @override
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
 }
 
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _passwordTEController = TextEditingController();
+  final TextEditingController _confrimPasswordTEController =
+      TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,88 +32,159 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 80),
-                Text(
-                  'Set Password',
-                  // style: Theme.of(context).textTheme.headlineMedium,
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                const Text(
-                  'Minimum Password length Should be more than 8 letters ',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600, color: Colors.grey),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Password',
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 80),
+                  Text(
+                    'Set Password',
+                    // style: Theme.of(context).textTheme.headlineMedium,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Confirm Password',
+                  const SizedBox(
+                    height: 8,
                   ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const PinVerificationScreen()),
-                      );
-                    },
-                    child:const Text('Confirm')
+                  const Text(
+                    'Minimum Password length Should be more than 6 letters ',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600, color: Colors.grey),
                   ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      "Have an account ?",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w600,
-                      ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  TextFormField(
+                    controller: _passwordTEController,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      hintText: 'Password',
                     ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> const LoginScreen()), (route) => false);
-                      },
-                      child: const Text(
-                        'Sign In',
+                    validator: (String? value) {
+                      if (value?.isEmpty ?? true) {
+                        return 'Enter your mobile';
+                      }
+                      if (value!.length < 6) {
+                        return 'Enter password more than 6 letters';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  TextFormField(
+                    controller: _confrimPasswordTEController,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      hintText: 'Password',
+                    ),
+                    validator: (String? value) {
+                      if (_passwordTEController.text != value) {
+                        return 'Password did not match, Try again!';
+                      }
+                      if (value?.isEmpty ?? true) {
+                        return 'Enter your Confirm password';
+                      }
+                      if (value!.length < 6) {
+                        return 'Enter password more than 6 letters';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                        onPressed: () {
+                          _resetPass();
+                        },
+                        child: const Text('Confirm')),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Have an account ?",
                         style: TextStyle(
                           fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
-                    )
-                  ],
-                )
-              ],
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginScreen()),
+                              (route) => false);
+                        },
+                        child: const Text(
+                          'Sign In',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
       )),
     );
   }
+
+  Future<void> _resetPass() async {
+    if (_formKey.currentState!.validate()) {
+      if (mounted) {
+        setState(() {});
+      }
+      final NetworkResponse response =
+          await NetworkCaller().postRequest(Urls.recoverResetPassword, body: {
+        "email": widget.email,
+        "OTP": widget.OTP,
+        "password": _passwordTEController.text,
+      });
+
+      if (mounted) {
+        setState(() {});
+      }
+      if (response.isSuccess) {
+        if (mounted) {
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => LoginScreen()),
+              (route) => false);
+          showSnackMessage(context, 'Password Updated.');
+        }
+      } else {
+        if (mounted) {
+          showSnackMessage(context, 'Set password Failed.', true);
+        }
+      }
+    }
+  }
+
+// void _clearTextFields() {
+//   _emailTEController.clear();
+//   _otpTEController.clear();
+//   _passwordTEController.clear();
+// }
+//
+// @override
+// void dispose() {
+//   _emailTEController.dispose();
+//   _otpTEController.dispose();
+//   _passwordTEController.dispose();
+//   super.dispose();
+// }
 }

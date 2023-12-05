@@ -1,18 +1,30 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:task_manager_project_rest_api/ui/screens/login_screen.dart';
 import 'package:task_manager_project_rest_api/ui/screens/reset_password_screen.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/body_background.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
+import '../../data/network_caller/network_caller.dart';
+import '../../data/network_caller/network_response.dart';
+import '../../data/utility/urls.dart';
+import '../widgets/snack_message.dart';
 
 class PinVerificationScreen extends StatefulWidget {
-  const PinVerificationScreen({super.key});
+  final String email;
+
+  const PinVerificationScreen({super.key, required this.email});
 
   @override
   State<PinVerificationScreen> createState() => _PinVerificationScreenState();
 }
 
 class _PinVerificationScreenState extends State<PinVerificationScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _otpTEController = TextEditingController();
+  bool _otpVerifyInProgess = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +55,7 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                     height: 24,
                   ),
                   PinCodeTextField(
+                    controller: _otpTEController,
                     length: 6,
                     obscureText: false,
                     animationType: AnimationType.fade,
@@ -73,16 +86,15 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                   ),
                   SizedBox(
                     width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ResetPasswordScreen(),
-                          ),
-                        );
-                      },
-                      child: const Text('Verify'),
+                    child: Visibility(
+                      visible: _otpVerifyInProgess == false,
+                      replacement: Center(child: CircularProgressIndicator()),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          otpVerify();
+                        },
+                        child: const Text('Verify'),
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -104,7 +116,7 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => const LoginScreen()),
-                                  (route) => false);
+                              (route) => false);
                         },
                         child: const Text(
                           'Sign In',
@@ -120,5 +132,35 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> otpVerify() async {
+    _otpVerifyInProgess = true;
+    if (mounted) {
+      setState(() {});
+    }
+    final NetworkResponse response = await NetworkCaller()
+        .getRequest(Urls.recoveryOTPUrl(widget.email, _otpTEController.text));
+    _otpVerifyInProgess = false;
+    if (mounted) {
+      setState(() {});
+    }
+
+    if (response.isSuccess) {
+      if (mounted) {
+        showSnackMessage(context, 'OTP is Verified');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ResetPasswordScreen(
+                  email: widget.email, OTP: _otpTEController.text)),
+        );
+      } else {
+        if (mounted) {
+          showSnackMessage(context, 'OTP verfication failed. Try again!', true);
+          Navigator.pop(context);
+        }
+      }
+    }
   }
 }

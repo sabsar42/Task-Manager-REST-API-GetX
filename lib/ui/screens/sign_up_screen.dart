@@ -54,7 +54,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       autovalidateMode: AutovalidateMode.always,
                       validator: (String? value) {
-                        // todo - validate the email address with regex
 
                         if (value?.trim().isEmpty ?? true) {
                           return 'Enter your valid email';
@@ -108,7 +107,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         hintText: 'Mobile',
                       ),
                       validator: (String? value) {
-                        // todo - validate the mobile no with 11 digits
+
                         if (value?.trim().isEmpty ?? true) {
                           return 'Enter your mobile';
                         }
@@ -132,7 +131,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       validator: (String? value) {
                         if (value?.isEmpty ?? true) {
-                          return 'Enter your mobile';
+                          return 'Enter your Password';
                         }
                         if (value!.length < 6) {
                           return 'Enter password more than 6 letters';
