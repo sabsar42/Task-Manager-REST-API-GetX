@@ -276,7 +276,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           Expanded(
             flex: 3,
             child: InkWell(
-              highlightColor: Colors.blueGrey,
               onTap: () async {
                 final XFile? image = await ImagePicker()
                     .pickImage(source: ImageSource.gallery, imageQuality: 50);
