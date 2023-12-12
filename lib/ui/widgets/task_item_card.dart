@@ -28,6 +28,7 @@ class TaskItemCard extends StatefulWidget {
   State<TaskItemCard> createState() => _TaskItemCardState();
 }
 
+
 class _TaskItemCardState extends State<TaskItemCard> {
   Future<void> updateTaskStatus(String status) async {
     widget.showProgress(true);
