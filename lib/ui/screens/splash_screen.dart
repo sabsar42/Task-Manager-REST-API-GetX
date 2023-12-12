@@ -4,6 +4,7 @@ import 'package:task_manager_project_rest_api/ui/controllers/auth_controllers.da
 import 'package:task_manager_project_rest_api/ui/screens/login_screen.dart';
 import 'package:task_manager_project_rest_api/ui/screens/main_bottom_nav_screen.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/body_background.dart';
+import 'package:get/get.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -22,13 +23,8 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> goToLogin() async {
     final bool isLoggedIn = await AuthController.checkAuthState();
     Future.delayed(const Duration(seconds: 2)).then((value) {
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-              builder: (context) => isLoggedIn
-                  ? const MainBottomNavScreen()
-                  : const LoginScreen()),
-          (route) => false);
+      Get.offAll(
+          isLoggedIn ? const MainBottomNavScreen() : const LoginScreen());
     });
   }
 

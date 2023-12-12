@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:task_manager_project_rest_api/data/network_caller/network_caller.dart';
 import 'package:task_manager_project_rest_api/data/network_caller/network_response.dart';
 import 'package:task_manager_project_rest_api/data/utility/urls.dart';
+import 'package:task_manager_project_rest_api/ui/controllers/new_task_controller.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/body_background.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/profile_summary_card.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/snack_message.dart';
+import 'package:get/get.dart';
 
 import 'main_bottom_nav_screen.dart';
 
@@ -135,6 +137,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
         newTaskAdded = true;
         _subjectTEController.clear();
         _descriptionTEController.clear();
+        Get.find<NewTaskController>().getNewTaskList();
         if (mounted) {
           showSnackMessage(context, 'New task added!');
           Navigator.pushAndRemoveUntil(
