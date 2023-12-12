@@ -28,7 +28,6 @@ class TaskItemCard extends StatefulWidget {
   State<TaskItemCard> createState() => _TaskItemCardState();
 }
 
-
 class _TaskItemCardState extends State<TaskItemCard> {
   Future<void> updateTaskStatus(String status) async {
     widget.showProgress(true);
@@ -174,8 +173,7 @@ class _TaskItemCardState extends State<TaskItemCard> {
                       deleteTaskStatus(id);
                       Navigator.pop(context);
                     },
-                    child: const Text(
-                        'Yes',
+                    child: const Text('Yes',
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.blueGrey,
@@ -185,8 +183,7 @@ class _TaskItemCardState extends State<TaskItemCard> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text(
-                        'No',
+                    child: const Text('No',
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.blueGrey,
