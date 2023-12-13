@@ -59,6 +59,7 @@ class NetworkCaller {
       log(response.headers.toString());
       log(response.statusCode.toString());
       log(response.body.toString());
+
       if (response.statusCode == 200) {
         return NetworkResponse(
           isSuccess: true,
