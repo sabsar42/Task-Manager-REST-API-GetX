@@ -7,8 +7,10 @@ import 'package:task_manager_project_rest_api/ui/controllers/edit_profile_contro
 import 'package:task_manager_project_rest_api/ui/controllers/forgot_password_contoller.dart';
 import 'package:task_manager_project_rest_api/ui/controllers/login_controller.dart';
 import 'package:task_manager_project_rest_api/ui/controllers/new_task_controller.dart';
+import 'package:task_manager_project_rest_api/ui/controllers/pin_verification_controller.dart';
 import 'package:task_manager_project_rest_api/ui/controllers/progress_task_controller.dart';
 import 'package:task_manager_project_rest_api/ui/controllers/reset_password_controller.dart';
+import 'package:task_manager_project_rest_api/ui/controllers/signup_controller.dart';
 import 'package:task_manager_project_rest_api/ui/controllers/tasks_count_summary_list_controller.dart';
 import 'package:task_manager_project_rest_api/ui/screens/splash_screen.dart';
 import 'package:get/get.dart';
@@ -55,6 +57,8 @@ class ControllerBinder extends Bindings {
   void dependencies() {
 
     Get.put(AuthController());
+    Get.put(PinVerificationController());
+    Get.put(SignUpController());
     Get.put(ResetPassWordController());
     Get.put(ForgotPasswordController());
     Get.put(EditProfileController());

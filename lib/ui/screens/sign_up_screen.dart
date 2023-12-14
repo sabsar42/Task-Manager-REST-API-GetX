@@ -1,10 +1,16 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
+import 'package:task_manager_project_rest_api/ui/controllers/signup_controller.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/body_background.dart';
 
 import '../../data/network_caller/network_caller.dart';
 import '../../data/network_caller/network_response.dart';
 import '../../data/utility/urls.dart';
 import '../widgets/snack_message.dart';
+import 'package:get/get.dart';
+
+import 'login_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -21,7 +27,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _passwordTEController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  bool _signUpInProgress = false;
+  SignUpController signUpController = Get.find<SignUpController>();
 
   @override
   Widget build(BuildContext context) {
@@ -142,16 +148,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     SizedBox(
                       width: double.infinity,
-                      child: Visibility(
-                        visible: _signUpInProgress == false,
-                        replacement: const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                        child: ElevatedButton(
-                          onPressed: _signUp,
-                          child: const Icon(Icons.arrow_forward_ios),
-                        ),
-                      ),
+                      child: GetBuilder<SignUpController>(
+                          builder: (signUpController) {
+                        return Visibility(
+                          visible: signUpController.signUpInProgress == false,
+                          replacement: const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                          child: ElevatedButton(
+                            onPressed: _signUp,
+                            child: const Icon(Icons.arrow_forward_ios),
+                          ),
+                        );
+                      }),
                     ),
                     const SizedBox(
                       height: 48,
@@ -188,33 +197,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Future<void> _signUp() async {
-    if (_formKey.currentState!.validate()) {
-      _signUpInProgress = true;
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    final response = await signUpController.signUp(
+        _emailTEController.text.trim(),
+        _firstNameTEController.text.trim(),
+        _lastNameTEController.text.trim(),
+        _mobileTEController.text.trim(),
+        _passwordTEController.text);
+
+    if (response) {
+      _clearTextFields();
       if (mounted) {
-        setState(() {});
+        showSnackMessage(context, signUpController.message);
+        Get.offAll(const LoginScreen());
       }
-      final NetworkResponse response =
-          await NetworkCaller().postRequest(Urls.registration, body: {
-        "firstName": _firstNameTEController.text.trim(),
-        "lastName": _lastNameTEController.text.trim(),
-        "email": _emailTEController.text.trim(),
-        "password": _passwordTEController.text,
-        "mobile": _mobileTEController.text.trim(),
-      });
-      _signUpInProgress = false;
+    } else {
       if (mounted) {
-        setState(() {});
-      }
-      if (response.isSuccess) {
-        _clearTextFields();
-        if (mounted) {
-          showSnackMessage(context, 'Account has been created! Please login.');
-        }
-      } else {
-        if (mounted) {
-          showSnackMessage(
-              context, 'Account creation failed! Please try again.', true);
-        }
+        showSnackMessage(context, signUpController.message, true);
       }
     }
   }
@@ -237,5 +239,3 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.dispose();
   }
 }
-
-
