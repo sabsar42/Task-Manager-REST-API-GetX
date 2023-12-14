@@ -20,6 +20,7 @@ class TaskItemCard extends StatefulWidget {
     required this.showProgress,
   });
 
+
   final Task task;
   final VoidCallback onStatusChange;
   final Function(bool) showProgress;
