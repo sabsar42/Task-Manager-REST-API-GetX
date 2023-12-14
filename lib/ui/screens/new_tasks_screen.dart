@@ -7,6 +7,7 @@ import 'package:task_manager_project_rest_api/data/network_caller/network_respon
 import 'package:task_manager_project_rest_api/ui/controllers/new_task_controller.dart';
 import 'package:task_manager_project_rest_api/ui/screens/add_new_tasks_screen.dart';
 import '../../data/utility/urls.dart';
+import '../controllers/tasks_count_summary_list_controller.dart';
 import '../widgets/profile_summary_card.dart';
 import '../widgets/summary_card.dart';
 import '../widgets/task_item_card.dart';
@@ -20,36 +21,15 @@ class NewTasksScreen extends StatefulWidget {
 }
 
 class _NewTasksScreenState extends State<NewTasksScreen> {
-  bool getNewTaskInProgress = false;
-  bool getTaskCountSummaryInProgress = false;
-
-  TaskCountSummaryListModel taskCountSummaryListModel =
-      TaskCountSummaryListModel();
-
-  NewTaskController newTaskController = Get.find<NewTaskController>();
-
-  Future<void> getTaskCountSummaryList() async {
-    getTaskCountSummaryInProgress = true;
-    if (mounted) {
-      setState(() {});
-    }
-    final NetworkResponse response =
-        await NetworkCaller().getRequest(Urls.getTaskStatusCount);
-    if (response.isSuccess) {
-      taskCountSummaryListModel =
-          TaskCountSummaryListModel.fromJson(response.jsonResponse);
-    }
-    getTaskCountSummaryInProgress = false;
-    if (mounted) {
-      setState(() {});
-    }
-  }
+  NewTaskController _newTaskController = Get.find<NewTaskController>();
+  TaskCountSummaryListController _taskCountSummaryListController =
+      Get.find<TaskCountSummaryListController>();
 
   @override
   void initState() {
     super.initState();
-    newTaskController.getNewTaskList();
-    getTaskCountSummaryList();
+    Get.find<TaskCountSummaryListController>().getTaskCountSummaryList();
+    _newTaskController.getNewTaskList();
   }
 
   @override
@@ -57,16 +37,11 @@ class _NewTasksScreenState extends State<NewTasksScreen> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final response = await Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const AddNewTaskScreen(),
-            ),
-          );
+          final response = await Get.to(AddNewTaskScreen());
 
           if (response != null && response == true) {
-            newTaskController.getNewTaskList();
-            getTaskCountSummaryList();
+            _newTaskController.getNewTaskList();
+            _taskCountSummaryListController.getTaskCountSummaryList();
           }
         },
         child: const Icon(Icons.add),
@@ -75,38 +50,45 @@ class _NewTasksScreenState extends State<NewTasksScreen> {
         child: Column(
           children: [
             ProfileSummaryCard(),
-            Visibility(
-              visible: getTaskCountSummaryInProgress == false &&
-                  (taskCountSummaryListModel.taskCountList?.isNotEmpty ??
-                      false),
-              replacement: const LinearProgressIndicator(),
-              child: SizedBox(
-                height: 120,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount:
-                        taskCountSummaryListModel.taskCountList?.length ?? 0,
-                    itemBuilder: (context, index) {
-                      TaskCount taskCount =
-                          taskCountSummaryListModel.taskCountList![index];
-                      return FittedBox(
-                        child: SummaryCard(
-                          count: taskCount.sum.toString(),
-                          title: taskCount.sId ?? '',
-                        ),
-                      );
-                    }),
-              ),
-            ),
+            GetBuilder<TaskCountSummaryListController>(
+                builder: (taskCountSummaryListController) {
+              return Visibility(
+                visible: taskCountSummaryListController
+                        .getTaskCountSummaryInProgress ==
+                    false,
+                replacement: const LinearProgressIndicator(),
+                child: SizedBox(
+                  height: 120,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: taskCountSummaryListController
+                              .taskCountSummaryListModel
+                              .taskCountList
+                              ?.length ??
+                          0,
+                      itemBuilder: (context, index) {
+                        TaskCount taskCount = taskCountSummaryListController
+                            .taskCountSummaryListModel.taskCountList![index];
+                        return FittedBox(
+                          child: SummaryCard(
+                            count: taskCount.sum.toString(),
+                            title: taskCount.sId ?? '',
+                          ),
+                        );
+                      }),
+                ),
+              );
+            }),
             Expanded(
-              child: GetBuilder<NewTaskController>(builder: (context) {
+              child:
+                  GetBuilder<NewTaskController>(builder: (newTaskController) {
                 return Visibility(
                   visible: newTaskController.getNewTaskInProgress == false,
                   replacement: const Center(child: CircularProgressIndicator()),
                   child: RefreshIndicator(
                     onRefresh: () async {
                       newTaskController.getNewTaskList();
-                      getTaskCountSummaryList();
+                      _taskCountSummaryListController.getTaskCountSummaryList();
                     },
                     child: ListView.builder(
                       itemCount:

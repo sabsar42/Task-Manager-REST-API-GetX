@@ -3,6 +3,7 @@ import 'package:task_manager_project_rest_api/data/network_caller/network_caller
 import 'package:task_manager_project_rest_api/data/network_caller/network_response.dart';
 import 'package:task_manager_project_rest_api/data/utility/urls.dart';
 import 'package:task_manager_project_rest_api/ui/controllers/new_task_controller.dart';
+import 'package:task_manager_project_rest_api/ui/controllers/tasks_count_summary_list_controller.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/body_background.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/profile_summary_card.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/snack_message.dart';
@@ -30,7 +31,7 @@ class AddNewTaskController extends GetxController {
     if (response.isSuccess) {
       _newTaskAdd = true;
       Get.find<NewTaskController>().getNewTaskList();
-
+      Get.find<TaskCountSummaryListController>().getTaskCountSummaryList();
       _message = 'New task added!';
       return true;
     } else {

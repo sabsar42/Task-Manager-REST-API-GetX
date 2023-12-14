@@ -22,17 +22,17 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   final TextEditingController _descriptionTEController =
       TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool _createTaskInProgress = false;
+
   final AddNewTaskController _addNewTaskController =
       Get.find<AddNewTaskController>();
 
-  bool newTaskAdded = false;
+
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pop(context, newTaskAdded);
+        Navigator.pop(context, _addNewTaskController.newTaskAdd);
         return false;
       },
       child: Scaffold(
@@ -128,11 +128,11 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
         _subjectTEController.text, _descriptionTEController.text);
 
     if (response) {
-      newTaskAdded = _addNewTaskController.newTaskAdd;
+    //  _addNewTaskController.newTaskAdd = _addNewTaskController.newTaskAdd;
       _clearTextFields();
       if (mounted) {
         showSnackMessage(context, _addNewTaskController.message);
-        Get.offAll(MainBottomNavScreen());
+        Get.offAll(const  MainBottomNavScreen());
       }
     } else {
       if (mounted) {
