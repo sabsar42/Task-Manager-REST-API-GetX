@@ -5,7 +5,6 @@ import 'package:http/http.dart';
 import 'package:task_manager_project_rest_api/app.dart';
 import 'package:task_manager_project_rest_api/ui/controllers/auth_controllers.dart';
 import 'package:task_manager_project_rest_api/ui/screens/login_screen.dart';
-
 import 'network_response.dart';
 
 class NetworkCaller {
@@ -88,6 +87,7 @@ class NetworkCaller {
 
   Future<void> backToLogin() async {
     await AuthController.clearAuthData();
+
     Navigator.pushAndRemoveUntil(
         TaskManagerApp.navigationKey.currentContext!,
         MaterialPageRoute(builder: (context) => const LoginScreen()),

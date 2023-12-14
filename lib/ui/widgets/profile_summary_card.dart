@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:get/get.dart';
 
 import 'package:flutter/material.dart';
 import 'package:task_manager_project_rest_api/ui/controllers/auth_controllers.dart';
@@ -22,56 +23,59 @@ class ProfileSummaryCard extends StatefulWidget {
 class _ProfileSummaryCardState extends State<ProfileSummaryCard> {
   @override
   Widget build(BuildContext context) {
-    Uint8List imageBytes = const Base64Decoder().convert(AuthController.user?.photo??'');
 
-    return ListTile(
-      onTap: () {
-        if (widget.enableOnTap == true) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const EditProfileScreen(),
+
+    return GetBuilder<AuthController>(
+      builder: (authController) {
+        Uint8List imageBytes = const Base64Decoder().convert(authController.user?.photo??'');
+        return ListTile(
+          onTap: () {
+            if (widget.enableOnTap == true) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const EditProfileScreen(),
+                ),
+              );
+            }
+          },
+          leading: CircleAvatar(
+            child: authController.user?.photo == null
+                ? const Icon(Icons.person)
+                : ClipOval(
+
+              child: Image.memory(
+                imageBytes,
+                fit: BoxFit.cover,
+              ),
+              //child:Icon(Icons.abc),
             ),
-          );
-        }
-      },
-      leading: CircleAvatar(
-        child: AuthController.user?.photo == null
-            ? const Icon(Icons.person)
-            : ClipOval(
-
-          child: Image.memory(
-            imageBytes,
-            fit: BoxFit.cover,
           ),
-          //child:Icon(Icons.abc),
-        ),
-      ),
-      title:  Text(
-        fullName,
-        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
-      ),
-      subtitle:  Text(
-        AuthController.user?.email??'',
-        style: TextStyle(color: Colors.white),
-      ),
-      trailing: IconButton(
-        onPressed: ()async{
-          await AuthController.clearAuthData();
-          if(mounted) {
-            setState(() {
+          title:  Text(
+            fullName(authController),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+          ),
+          subtitle:  Text(
+            authController.user?.email??'',
+            style: TextStyle(color: Colors.white),
+          ),
+          trailing: IconButton(
+            onPressed: ()async{
+             AuthController.clearAuthData();
+              if(mounted) {
+                setState(() {
 
-            });
-            Navigator.pushAndRemoveUntil(context,
-                MaterialPageRoute(builder: (context) => LoginScreen()), (
-                    route) => false);
-          } },
-        icon: Icon(Icons.logout),
-      ),
-      tileColor: Colors.green,
+                });
+                Get.offAll(const LoginScreen());
+              } },
+            icon: Icon(Icons.logout),
+          ),
+          tileColor: Colors.green,
+        );
+      }
     );
   }
-  String get fullName{
-    return  '${AuthController.user?.firstName??''} ${AuthController.user?.lastName??''}';
+  String fullName(AuthController authController){
+    return  '${authController.user?.firstName??''} ${authController.user?.lastName??''}';
   }
 }

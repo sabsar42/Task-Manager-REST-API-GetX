@@ -5,6 +5,7 @@ import 'package:task_manager_project_rest_api/ui/screens/main_bottom_nav_screen.
 import 'package:task_manager_project_rest_api/ui/widgets/body_background.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/profile_summary_card.dart';
 import 'dart:convert';
+import 'package:get/get.dart';
 
 import '../../data/models/user_model.dart';
 import '../../data/network_caller/network_caller.dart';
@@ -28,7 +29,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final TextEditingController _lastNameTEController = TextEditingController();
   final TextEditingController _mobileTEController = TextEditingController();
   final TextEditingController _passwordTEController = TextEditingController();
-
+  AuthController authController = Get.find<AuthController>();
   bool _updateProfileInProgress = false;
 
   XFile? photo;
@@ -36,10 +37,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   void initState() {
     super.initState();
-    _emailTEController.text = AuthController.user?.email ?? '';
-    _firstNameTEController.text = AuthController.user?.firstName ?? '';
-    _lastNameTEController.text = AuthController.user?.lastName ?? '';
-    _mobileTEController.text = AuthController.user?.mobile ?? '';
+    _emailTEController.text = authController.user?.email ?? '';
+    _firstNameTEController.text = authController.user?.firstName ?? '';
+    _lastNameTEController.text = authController.user?.lastName ?? '';
+    _mobileTEController.text = authController.user?.mobile ?? '';
   }
 
   @override
@@ -226,12 +227,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       setState(() {});
     }
     if (response.isSuccess) {
-      AuthController.updateUserInformation(UserModel(
+      authController.updateUserInformation(UserModel(
           email: _emailTEController.text.trim(),
           firstName: _firstNameTEController.text.trim(),
           lastName: _lastNameTEController.text.trim(),
           mobile: _mobileTEController.text.trim(),
-          photo: photoInBase64 ?? AuthController.user?.photo));
+          photo: photoInBase64 ?? authController.user?.photo));
       if (mounted) {
         showSnackMessage(context, 'Update profile success!');
 

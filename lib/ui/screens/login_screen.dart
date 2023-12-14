@@ -160,6 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
         _emailTEController.text.trim(), _passwordTEController.text);
 
     if (response) {
+      _clearTextFields();
       if (mounted) {
         Get.offAll(MainBottomNavScreen());
       }
@@ -168,6 +169,11 @@ class _LoginScreenState extends State<LoginScreen> {
         showSnackMessage(context, _loginController.failureMessage);
       }
     }
+  }
+
+  void _clearTextFields() {
+    _emailTEController.clear();
+    _passwordTEController.clear();
   }
 
   @override

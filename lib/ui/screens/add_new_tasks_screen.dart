@@ -7,7 +7,7 @@ import 'package:task_manager_project_rest_api/ui/widgets/body_background.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/profile_summary_card.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/snack_message.dart';
 import 'package:get/get.dart';
-
+import '../controllers/add_new_task_controller.dart';
 import 'main_bottom_nav_screen.dart';
 
 class AddNewTaskScreen extends StatefulWidget {
@@ -23,6 +23,8 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
       TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _createTaskInProgress = false;
+  final AddNewTaskController _addNewTaskController =
+      Get.find<AddNewTaskController>();
 
   bool newTaskAdded = false;
 
@@ -89,15 +91,19 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                             ),
                             SizedBox(
                               width: double.infinity,
-                              child: Visibility(
-                                visible: _createTaskInProgress == false,
-                                replacement: const Center(
-                                  child: CircularProgressIndicator(),
-                                ),
-                                child: ElevatedButton(
-                                  onPressed: createTask,
-                                  child: const Icon(Icons.arrow_forward_ios),
-                                ),
+                              child: GetBuilder<AddNewTaskController>(
+                                builder: (addNewTaskController) {
+                                  return Visibility(
+                                    visible: addNewTaskController.createTaskInProgress == false,
+                                    replacement: const Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                    child: ElevatedButton(
+                                      onPressed: createTask,
+                                      child: const Icon(Icons.arrow_forward_ios),
+                                    ),
+                                  );
+                                }
                               ),
                             )
                           ],
@@ -115,40 +121,29 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   }
 
   Future<void> createTask() async {
-    if (_formKey.currentState!.validate()) {
-      _createTaskInProgress = true;
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+    final response = await _addNewTaskController.createTask(
+        _subjectTEController.text, _descriptionTEController.text);
+
+    if (response) {
+      newTaskAdded = _addNewTaskController.newTaskAdd;
+      _clearTextFields();
       if (mounted) {
-        setState(() {});
+        showSnackMessage(context, _addNewTaskController.message);
+        Get.offAll(MainBottomNavScreen());
       }
-      final NetworkResponse response =
-          await NetworkCaller().postRequest(Urls.createNewTask, body: {
-        "title": _subjectTEController.text.trim(),
-        "description": _descriptionTEController.text.trim(),
-        "status": "New"
-      });
-      _createTaskInProgress = false;
+    } else {
       if (mounted) {
-        setState(() {});
-      }
-      if (response.isSuccess) {
-        newTaskAdded = true;
-        _subjectTEController.clear();
-        _descriptionTEController.clear();
-        Get.find<NewTaskController>().getNewTaskList();
-        if (mounted) {
-          showSnackMessage(context, 'New task added!');
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const MainBottomNavScreen()),
-              (route) => false);
-        }
-      } else {
-        if (mounted) {
-          showSnackMessage(context, 'Create new task failed! Try again.', true);
-        }
+        showSnackMessage(context, _addNewTaskController.message);
       }
     }
+  }
+
+  void _clearTextFields() {
+    _descriptionTEController.clear();
+    _subjectTEController.clear();
   }
 
   @override
