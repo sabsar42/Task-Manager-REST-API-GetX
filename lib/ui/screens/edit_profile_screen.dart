@@ -214,6 +214,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
 
     if (response) {
+      _clearTextFields();
       if (mounted) {
         showSnackMessage(context, _editProfileController.message);
         Get.offAll( MainBottomNavScreen());
@@ -275,5 +276,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ],
       ),
     );
+  }
+  void _clearTextFields() {
+    _emailTEController.clear();
+    _firstNameTEController.clear();
+    _lastNameTEController.clear();
+    _mobileTEController.clear();
+    _passwordTEController.clear();
+  }
+
+  @override
+  void dispose() {
+    _emailTEController.dispose();
+    _firstNameTEController.dispose();
+    _lastNameTEController.dispose();
+    _mobileTEController.dispose();
+    _passwordTEController.dispose();
+    super.dispose();
   }
 }

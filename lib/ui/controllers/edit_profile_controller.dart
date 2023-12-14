@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:task_manager_project_rest_api/ui/controllers/tasks_count_summary_list_controller.dart';
 import 'package:task_manager_project_rest_api/ui/screens/main_bottom_nav_screen.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/body_background.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/profile_summary_card.dart';
@@ -12,6 +13,8 @@ import '../../data/utility/urls.dart';
 import '../controllers/auth_controllers.dart';
 import '../widgets/snack_message.dart';
 import 'package:image_picker/image_picker.dart';
+
+import 'new_task_controller.dart';
 
 class EditProfileController extends GetxController {
   AuthController authController = Get.find<AuthController>();
@@ -52,6 +55,8 @@ class EditProfileController extends GetxController {
     _updateProfileInProgress = false;
     update();
     if (response.isSuccess) {
+      Get.find<NewTaskController>().getNewTaskList();
+      Get.find<TaskCountSummaryListController>().getTaskCountSummaryList();
       authController.updateUserInformation(UserModel(
           email: email,
           firstName: firstName,
