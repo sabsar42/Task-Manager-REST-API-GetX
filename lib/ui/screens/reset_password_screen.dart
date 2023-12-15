@@ -111,7 +111,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         ),
                         child: ElevatedButton(
                           onPressed: () {
-                            _resetPass();
+                            resetPass();
                           },
                           child: const Text('Confirm'),
                         ),
@@ -158,7 +158,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     );
   }
 
-  Future<void> _resetPass() async {
+  Future<void> resetPass() async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -167,12 +167,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         widget.email.toString(),
         widget.otp.toString(),
         _passwordTEController.text);
-    _clearTextFields();
+
 
     if (response) {
-      _clearTextFields();
       if (mounted) {
-        Get.offAll(const LoginScreen());
+        Get.offAll( LoginScreen());
         showSnackMessage(context, _resetPassWordController.message);
       }
     } else {
@@ -182,13 +181,5 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     }
   }
 
-  void _clearTextFields() {
-    _passwordTEController.clear();
-  }
 
-  @override
-  void dispose() {
-    _passwordTEController.dispose();
-    super.dispose();
-  }
 }

@@ -14,29 +14,29 @@ import '../widgets/snack_message.dart';
 import 'package:get/get.dart';
 
 class PinVerificationController extends GetxController {
-  bool _otpVerifyInProgess = false;
+  bool _otpVerifyInProgress = false;
 
-  bool get otpVerifyInProgess => _otpVerifyInProgess;
+  bool get otpVerifyInProgress => _otpVerifyInProgress;
   String _message = '';
 
   String get message => _message;
 
   Future<bool> otpVerify(String email, String otp) async {
     bool isSuccess = false;
-    _otpVerifyInProgess = true;
+    _otpVerifyInProgress = true;
     update();
+
     final NetworkResponse response =
         await NetworkCaller().getRequest(Urls.recoveryOTPUrl(email, otp));
-    _otpVerifyInProgess = false;
+    _otpVerifyInProgress = false;
     update();
-    print('This => ${response.isSuccess}');
-    if (response.isSuccess) {
+
+    if (response.isSuccess &&  response.jsonResponse['status']=='success') {
       isSuccess = true;
       _message = 'OTP is Verified';
-
     } else {
-      _message = 'OTP verfication failed. Try again!';
-      isSuccess = false;print(_message);
+      _message = 'OTP verification failed. Try again!';
+      isSuccess = false;
     }
     update();
     return isSuccess;

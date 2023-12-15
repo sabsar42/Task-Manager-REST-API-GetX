@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:task_manager_project_rest_api/ui/controllers/tasks_count_summary_list_controller.dart';
 
 import '../../data/models/task_count_summary_model.dart';
 import '../../data/models/task_list_model.dart';
@@ -21,6 +22,7 @@ class NewTaskController extends GetxController {
         await NetworkCaller().getRequest(Urls.getNewTasks);
     _getNewTaskInProgress = false;
     if (response.isSuccess) {
+      Get.find<TaskCountSummaryListController>().getTaskCountSummaryList();
       _taskListModel = TaskListModel.fromJson(response.jsonResponse);
       isSuccess = true;
     }
