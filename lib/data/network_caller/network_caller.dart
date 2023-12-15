@@ -86,6 +86,7 @@ class NetworkCaller {
   }
 
   Future<void> backToLogin() async {
+
     await AuthController.clearAuthData();
 
     Navigator.pushAndRemoveUntil(

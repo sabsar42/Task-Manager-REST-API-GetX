@@ -118,11 +118,7 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                         ),
                         TextButton(
                           onPressed: () {
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const LoginScreen()),
-                                (route) => false);
+                            Get.offAll(() => const LoginScreen());
                           },
                           child: const Text(
                             'Sign In',

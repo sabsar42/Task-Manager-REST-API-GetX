@@ -25,7 +25,7 @@ class CancelledTaskController extends GetxController {
     _getCancelledTaskInProgress = false;
     if (response.isSuccess) {
       _taskListModel = TaskListModel.fromJson(response.jsonResponse);
-      isSuccess  = true;
+      isSuccess = true;
     }
 
     update();

@@ -1,4 +1,5 @@
 class NetworkResponse {
+
   final int? statusCode;
   final bool isSuccess;
   final dynamic jsonResponse;

@@ -26,13 +26,12 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   final AddNewTaskController _addNewTaskController =
       Get.find<AddNewTaskController>();
 
-
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pop(context, _addNewTaskController.newTaskAdd);
+        Get.back(result: _addNewTaskController.newTaskAdd);
+
         return false;
       },
       child: Scaffold(
@@ -92,19 +91,20 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
                             SizedBox(
                               width: double.infinity,
                               child: GetBuilder<AddNewTaskController>(
-                                builder: (addNewTaskController) {
-                                  return Visibility(
-                                    visible: addNewTaskController.createTaskInProgress == false,
-                                    replacement: const Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                    child: ElevatedButton(
-                                      onPressed: createTask,
-                                      child: const Icon(Icons.arrow_forward_ios),
-                                    ),
-                                  );
-                                }
-                              ),
+                                  builder: (addNewTaskController) {
+                                return Visibility(
+                                  visible: addNewTaskController
+                                          .createTaskInProgress ==
+                                      false,
+                                  replacement: const Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                  child: ElevatedButton(
+                                    onPressed: createTask,
+                                    child: const Icon(Icons.arrow_forward_ios),
+                                  ),
+                                );
+                              }),
                             )
                           ],
                         ),
@@ -128,11 +128,10 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
         _subjectTEController.text, _descriptionTEController.text);
 
     if (response) {
-    //  _addNewTaskController.newTaskAdd = _addNewTaskController.newTaskAdd;
       _clearTextFields();
       if (mounted) {
         showSnackMessage(context, _addNewTaskController.message);
-        Get.offAll(const  MainBottomNavScreen());
+        Get.offAll(const MainBottomNavScreen());
       }
     } else {
       if (mounted) {

@@ -25,6 +25,7 @@ class LoginController extends GetxController {
         isLogin: true);
     _loginInProgress = false;
 
+
     update();
     if (response.isSuccess) {
       await Get.find<AuthController>().saveUserInformation(

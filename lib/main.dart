@@ -4,5 +4,3 @@ import 'package:task_manager_project_rest_api/app.dart';
 void main() {
   runApp(const TaskManagerApp());
 }
-
-

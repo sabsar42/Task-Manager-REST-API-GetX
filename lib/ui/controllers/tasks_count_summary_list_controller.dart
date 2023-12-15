@@ -15,7 +15,8 @@ import 'package:get/get.dart';
 class TaskCountSummaryListController extends GetxController {
   bool _getTaskCountSummaryInProgress = false;
   TaskCountSummaryListModel _taskCountSummaryListModel =
-  TaskCountSummaryListModel();
+      TaskCountSummaryListModel();
+
   bool get getTaskCountSummaryInProgress => _getTaskCountSummaryInProgress;
 
   TaskCountSummaryListModel get taskCountSummaryListModel =>

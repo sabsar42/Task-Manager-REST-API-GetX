@@ -15,9 +15,7 @@ class AddNewTaskController extends GetxController {
   String _message = '';
 
   bool get createTaskInProgress => _createTaskInProgress;
-
   bool get newTaskAdd => _newTaskAdd;
-
   String get message => _message;
 
   Future<bool> createTask(String subject, String description) async {

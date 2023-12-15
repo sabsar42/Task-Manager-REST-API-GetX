@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:task_manager_project_rest_api/ui/screens/login_screen.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/body_background.dart';
@@ -10,7 +9,6 @@ import '../widgets/snack_message.dart';
 import 'package:get/get.dart';
 
 class ResetPassWordController extends GetxController {
-
   bool _resetPasswordInProgress = false;
 
   bool get resetPasswordInProgress => _resetPasswordInProgress;

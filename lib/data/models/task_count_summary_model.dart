@@ -6,6 +6,7 @@ class TaskCountSummaryListModel {
 
   TaskCountSummaryListModel({this.status, this.taskCountList});
 
+
   TaskCountSummaryListModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {

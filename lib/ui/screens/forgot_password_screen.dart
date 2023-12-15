@@ -17,8 +17,7 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final TextEditingController _emailTEController = TextEditingController();
-  ForgotPasswordController _forgotPasswordController =
-      Get.find<ForgotPasswordController>();
+  ForgotPasswordController _forgotPasswordController = Get.find<ForgotPasswordController>();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -118,7 +117,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          Get.back();
+
                         },
                         child: const Text(
                           'Sign In',

@@ -134,11 +134,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LoginScreen()),
-                              (route) => false);
+                          Get.offAll(() => const LoginScreen());
                         },
                         child: const Text(
                           'Sign In',
@@ -168,10 +164,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         widget.otp.toString(),
         _passwordTEController.text);
 
-
     if (response) {
       if (mounted) {
-        Get.offAll( LoginScreen());
+        Get.offAll(LoginScreen());
         showSnackMessage(context, _resetPassWordController.message);
       }
     } else {
@@ -180,6 +175,4 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       }
     }
   }
-
-
 }

@@ -55,7 +55,6 @@ class TaskManagerApp extends StatelessWidget {
 class ControllerBinder extends Bindings {
   @override
   void dependencies() {
-
     Get.put(AuthController());
     Get.put(PinVerificationController());
     Get.put(SignUpController());

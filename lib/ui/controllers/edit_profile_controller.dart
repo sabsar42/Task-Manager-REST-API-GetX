@@ -22,7 +22,6 @@ class EditProfileController extends GetxController {
   String _message = '';
 
   String get message => _message;
-
   bool get updateProfileInProgress => _updateProfileInProgress;
 
   Future<bool> updateProfile(String? firstName, String? lastName, String? email,

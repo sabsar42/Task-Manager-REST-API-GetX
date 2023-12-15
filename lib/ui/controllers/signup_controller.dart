@@ -7,7 +7,6 @@ import '../../data/utility/urls.dart';
 import '../widgets/snack_message.dart';
 import 'package:get/get.dart';
 
-
 class SignUpController extends GetxController {
   bool _signUpInProgress = false;
   String _messsage = '';
@@ -16,13 +15,18 @@ class SignUpController extends GetxController {
 
   bool get signUpInProgress => _signUpInProgress;
 
-  Future<bool> signUp(String? firstName, String? lastName, String? email,
-      String? mobile, String? password,) async {
+  Future<bool> signUp(
+    String? firstName,
+    String? lastName,
+    String? email,
+    String? mobile,
+    String? password,
+  ) async {
     bool isSuccess = false;
     _signUpInProgress = true;
     update();
     final NetworkResponse response =
-    await NetworkCaller().postRequest(Urls.registration, body: {
+        await NetworkCaller().postRequest(Urls.registration, body: {
       "firstName": firstName,
       "lastName": lastName,
       "email": email,

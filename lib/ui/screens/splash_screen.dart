@@ -6,6 +6,7 @@ import 'package:task_manager_project_rest_api/ui/screens/main_bottom_nav_screen.
 import 'package:task_manager_project_rest_api/ui/widgets/body_background.dart';
 import 'package:get/get.dart';
 
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 

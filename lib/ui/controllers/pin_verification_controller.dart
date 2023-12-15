@@ -31,9 +31,14 @@ class PinVerificationController extends GetxController {
     _otpVerifyInProgress = false;
     update();
 
-    if (response.isSuccess &&  response.jsonResponse['status']=='success') {
-      isSuccess = true;
-      _message = 'OTP is Verified';
+    if (response != null) {
+      if (response.isSuccess && response.jsonResponse['status'] == 'success') {
+        isSuccess = true;
+        _message = 'OTP is Verified';
+      } else {
+        _message = 'Wrong OTP. Try again';
+        isSuccess = false;
+      }
     } else {
       _message = 'OTP verification failed. Try again!';
       isSuccess = false;

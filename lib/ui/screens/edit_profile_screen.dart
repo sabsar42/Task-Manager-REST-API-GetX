@@ -32,9 +32,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final TextEditingController _mobileTEController = TextEditingController();
   final TextEditingController _passwordTEController = TextEditingController();
   AuthController authController = Get.find<AuthController>();
-  EditProfileController _editProfileController =
-      Get.find<EditProfileController>();
-
+  EditProfileController _editProfileController = Get.find<EditProfileController>();
   XFile? photo;
 
   @override

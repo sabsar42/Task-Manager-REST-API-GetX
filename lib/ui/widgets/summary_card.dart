@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-
 class SummaryCard extends StatefulWidget {
   const SummaryCard({
-    super.key, required this.count, required this.title,
+    super.key,
+    required this.count,
+    required this.title,
   });
 
   final String count, title;
@@ -20,11 +21,11 @@ class _SummaryCardState extends State<SummaryCard> {
         padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32),
         child: Column(
           children: [
-            Text(widget.count,
+            Text(
+              widget.count,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             Text(widget.title),
-
           ],
         ),
       ),

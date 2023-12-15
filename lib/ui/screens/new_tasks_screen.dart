@@ -25,6 +25,7 @@ class _NewTasksScreenState extends State<NewTasksScreen> {
   TaskCountSummaryListController _taskCountSummaryListController =
       Get.find<TaskCountSummaryListController>();
 
+
   @override
   void initState() {
     super.initState();
@@ -37,7 +38,7 @@ class _NewTasksScreenState extends State<NewTasksScreen> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final response = await Get.to(AddNewTaskScreen());
+          final response = await Get.to(()=>AddNewTaskScreen());
 
           if (response != null && response == true) {
             _newTaskController.getNewTaskList();

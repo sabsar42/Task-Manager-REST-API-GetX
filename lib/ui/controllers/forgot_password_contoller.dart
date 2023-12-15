@@ -12,7 +12,6 @@ class ForgotPasswordController extends GetxController {
   String _message = '';
 
   bool get forgetPasswordInProgress => _forgetPasswordInProgress;
-
   String get message => _message;
 
   Future<bool> forgetPassword(String email) async {

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:task_manager_project_rest_api/ui/controllers/signup_controller.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/body_background.dart';
@@ -26,7 +25,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _passwordTEController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  SignUpController signUpController = Get.find<SignUpController>();
+  SignUpController _signUpController = Get.find<SignUpController>();
 
   @override
   Widget build(BuildContext context) {
@@ -176,7 +175,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         TextButton(
                           onPressed: () {
-                            Navigator.pop(context);
+                            Get.back();
                           },
                           child: const Text(
                             'Sign In',
@@ -200,7 +199,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       return;
     }
 
-    final response = await signUpController.signUp(
+    final response = await _signUpController.signUp(
         _emailTEController.text.trim(),
         _firstNameTEController.text.trim(),
         _lastNameTEController.text.trim(),
@@ -210,12 +209,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (response) {
       _clearTextFields();
       if (mounted) {
-        showSnackMessage(context, signUpController.message);
+        showSnackMessage(context, _signUpController.message);
         Get.offAll(const LoginScreen());
       }
     } else {
       if (mounted) {
-        showSnackMessage(context, signUpController.message, true);
+        showSnackMessage(context, _signUpController.message, true);
       }
     }
   }

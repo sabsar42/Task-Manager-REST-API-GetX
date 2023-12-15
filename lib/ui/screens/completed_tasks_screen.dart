@@ -17,7 +17,8 @@ class CompletedTasksScreen extends StatefulWidget {
 }
 
 class _CompletedTasksScreenState extends State<CompletedTasksScreen> {
-  CompletedTaskController _completedTaskController = Get.find<CompletedTaskController>();
+  CompletedTaskController _completedTaskController =
+      Get.find<CompletedTaskController>();
 
   @override
   void initState() {
@@ -33,32 +34,33 @@ class _CompletedTasksScreenState extends State<CompletedTasksScreen> {
         children: [
           ProfileSummaryCard(),
           GetBuilder<CompletedTaskController>(
-            builder: (completedTaskController) {
-              return Expanded(
-                child: Visibility(
-                  visible: completedTaskController.getCompletedTaskInProgress == false,
-                  replacement: const Center(child: CircularProgressIndicator()),
-                  child: RefreshIndicator(
-                    onRefresh:  completedTaskController.getCompletedTaskList,
-                    child: ListView.builder(
-                      itemCount:  completedTaskController.taskListModel.taskList?.length ?? 0,
-                      itemBuilder: (context, index) {
-                        return TaskItemCard(
-                          task:  completedTaskController.taskListModel.taskList![index],
-                          onStatusChange: () {
-                            completedTaskController.getCompletedTaskList();
-                          },
-                          showProgress: (inProgress) {
-
-                          },
-                        );
-                      },
-                    ),
+              builder: (completedTaskController) {
+            return Expanded(
+              child: Visibility(
+                visible:
+                    completedTaskController.getCompletedTaskInProgress == false,
+                replacement: const Center(child: CircularProgressIndicator()),
+                child: RefreshIndicator(
+                  onRefresh: completedTaskController.getCompletedTaskList,
+                  child: ListView.builder(
+                    itemCount: completedTaskController
+                            .taskListModel.taskList?.length ??
+                        0,
+                    itemBuilder: (context, index) {
+                      return TaskItemCard(
+                        task: completedTaskController
+                            .taskListModel.taskList![index],
+                        onStatusChange: () {
+                          completedTaskController.getCompletedTaskList();
+                        },
+                        showProgress: (inProgress) {},
+                      );
+                    },
                   ),
                 ),
-              );
-            }
-          ),
+              ),
+            );
+          }),
         ],
       ),
     ));

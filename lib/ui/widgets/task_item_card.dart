@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager_project_rest_api/data/network_caller/network_caller.dart';
 
-import '../../data/models/task..dart';
+import '../../data/models/task.dart';
 import '../../data/utility/urls.dart';
 import '../screens/main_bottom_nav_screen.dart';
+import 'package:get/get.dart';
 
 enum TaskStatus {
   New,
@@ -19,7 +20,6 @@ class TaskItemCard extends StatefulWidget {
     required this.onStatusChange,
     required this.showProgress,
   });
-
 
   final Task task;
   final VoidCallback onStatusChange;
@@ -113,11 +113,7 @@ class _TaskItemCardState extends State<TaskItemCard> {
               onTap: () {
                 updateTaskStatus(e.name);
 
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const MainBottomNavScreen()),
-                    (route) => false);
+                Get.offAll(() => const MainBottomNavScreen());
               },
             ))
         .toList();
@@ -138,7 +134,7 @@ class _TaskItemCardState extends State<TaskItemCard> {
                 children: [
                   TextButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      Get.back();
                     },
                     child: const Text('Cancel',
                         style: TextStyle(
@@ -172,7 +168,7 @@ class _TaskItemCardState extends State<TaskItemCard> {
                   TextButton(
                     onPressed: () {
                       deleteTaskStatus(id);
-                      Navigator.pop(context);
+                      Get.back();
                     },
                     child: const Text('Yes',
                         style: TextStyle(
@@ -182,7 +178,7 @@ class _TaskItemCardState extends State<TaskItemCard> {
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      Get.back();
                     },
                     child: const Text('No',
                         style: TextStyle(

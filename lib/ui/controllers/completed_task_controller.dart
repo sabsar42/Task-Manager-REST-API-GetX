@@ -13,6 +13,7 @@ class CompletedTaskController extends GetxController {
   bool _getCompletedTaskInProgress = false;
   TaskListModel _taskListModel = TaskListModel();
 
+
   bool get getCompletedTaskInProgress => _getCompletedTaskInProgress;
   TaskListModel get taskListModel => _taskListModel;
 

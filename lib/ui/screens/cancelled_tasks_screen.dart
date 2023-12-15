@@ -17,8 +17,7 @@ class CancelledTasksScreen extends StatefulWidget {
 }
 
 class _CancelledTasksScreenState extends State<CancelledTasksScreen> {
-  CancelledTaskController _cancelledTaskController =
-      Get.find<CancelledTaskController>();
+  CancelledTaskController _cancelledTaskController = Get.find<CancelledTaskController>();
 
   @override
   void initState() {
@@ -37,7 +36,7 @@ class _CancelledTasksScreenState extends State<CancelledTasksScreen> {
             child: GetBuilder<CancelledTaskController>(builder: (context) {
               return Visibility(
                 visible:
-                    _cancelledTaskController.getCancelledTaskInProgress == false,
+                _cancelledTaskController.getCancelledTaskInProgress == false,
                 replacement: const Center(child: CircularProgressIndicator()),
                 child: RefreshIndicator(
                   onRefresh: _cancelledTaskController.getCancelledTaskList,

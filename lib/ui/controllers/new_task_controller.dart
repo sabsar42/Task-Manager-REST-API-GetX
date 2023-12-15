@@ -12,6 +12,7 @@ class NewTaskController extends GetxController {
   TaskListModel _taskListModel = TaskListModel();
 
   bool get getNewTaskInProgress => _getNewTaskInProgress;
+
   TaskListModel get taskListModel => _taskListModel;
 
   Future<bool> getNewTaskList() async {
