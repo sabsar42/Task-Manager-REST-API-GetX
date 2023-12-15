@@ -217,7 +217,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       _clearTextFields();
       if (mounted) {
         showSnackMessage(context, _editProfileController.message);
-        Get.offAll( MainBottomNavScreen());
+        Get.offAll(() =>  MainBottomNavScreen());
       }
     } else {
       if (mounted) {

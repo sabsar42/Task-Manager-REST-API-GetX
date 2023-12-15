@@ -76,10 +76,6 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                       ),
                       animationDuration: const Duration(milliseconds: 300),
                       enableActiveFill: true,
-                      onCompleted: (v) {
-                        print("Completed");
-                      },
-                      onChanged: (value) {},
                       beforeTextPaste: (text) {
                         return true;
                       },
@@ -94,12 +90,13 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                           builder: (pinVerificationController) {
                         return Visibility(
                           visible:
-                              pinVerificationController.otpVerifyInProgess ==
+                              _pinVerificationController.otpVerifyInProgess ==
                                   false,
                           replacement:
                               const Center(child: CircularProgressIndicator()),
                           child: ElevatedButton(
                             onPressed: () {
+                              print('XXXXHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH');
                               otpVerify();
                             },
                             child: const Text('Verify'),
@@ -149,20 +146,21 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
     if (!_formKey.currentState!.validate()) {
       return;
     }
-
     final response = await _pinVerificationController.otpVerify(
-        widget.email, _otpTEController.text);
+        widget.email.toString(), _otpTEController.toString());
+    print('THEI SISSSSSSS $response');
     if (response) {
-      if (mounted) {
+
+
         showSnackMessage(context, _pinVerificationController.message);
-        Get.to(ResetPasswordScreen(
-            email: widget.email, otp: _otpTEController.text));
-      } else {
+        Get.offAll(()=>ResetPasswordScreen(
+            email: widget.email.toString(), otp: _otpTEController.toString()));}
+       else {
         if (mounted) {
           showSnackMessage(context, _pinVerificationController.message, true);
         }
-        Get.back();
+
       }
     }
   }
-}
+

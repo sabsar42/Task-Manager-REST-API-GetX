@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:task_manager_project_rest_api/ui/controllers/reset_password_controller.dart';
 import 'package:task_manager_project_rest_api/ui/screens/login_screen.dart';
 import 'package:task_manager_project_rest_api/ui/screens/reset_password_screen.dart';
 import 'package:task_manager_project_rest_api/ui/widgets/body_background.dart';
@@ -26,13 +29,14 @@ class PinVerificationController extends GetxController {
         await NetworkCaller().getRequest(Urls.recoveryOTPUrl(email, otp));
     _otpVerifyInProgess = false;
     update();
-
+    print('This => ${response.isSuccess}');
     if (response.isSuccess) {
       isSuccess = true;
       _message = 'OTP is Verified';
+
     } else {
       _message = 'OTP verfication failed. Try again!';
-      isSuccess = false;
+      isSuccess = false;print(_message);
     }
     update();
     return isSuccess;
